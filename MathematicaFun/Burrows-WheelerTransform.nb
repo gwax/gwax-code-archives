@@ -1,0 +1,246 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 7.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[      9768,        237]
+NotebookOptionsPosition[      9211,        214]
+NotebookOutlinePosition[      9554,        229]
+CellTagsIndexPosition[      9511,        226]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"StringRotate", "[", 
+    RowBox[{"aString_", ",", "n_"}], "]"}], ":=", 
+   RowBox[{"StringJoin", "[", 
+    RowBox[{"RotateLeft", "[", 
+     RowBox[{
+      RowBox[{"Characters", "[", "aString", "]"}], ",", "n"}], "]"}], "]"}]}],
+   ";"}]], "Input",
+ CellChangeTimes->{{3.4676583365625*^9, 3.467658381*^9}, {3.46765841725*^9, 
+  3.467658473046875*^9}, {3.46765873334375*^9, 3.467658771703125*^9}, {
+  3.467658808796875*^9, 3.467658830125*^9}, {3.46765887465625*^9, 
+  3.467658979625*^9}, {3.4676592625*^9, 3.46765932728125*^9}, {
+  3.467659357296875*^9, 3.467659358703125*^9}, {3.467662988375*^9, 
+  3.467662988765625*^9}, {3.46766312309375*^9, 3.467663144921875*^9}, {
+  3.46766649471875*^9, 3.46766651425*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"BurrowsWheelerTransform", "[", 
+    RowBox[{"aString_", ",", "aEOFchar_"}], "]"}], ":=", 
+   "\[IndentingNewLine]", 
+   RowBox[{"StringJoin", "[", "\[IndentingNewLine]", 
+    RowBox[{"Map", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"StringTake", "[", 
+        RowBox[{"#", ",", 
+         RowBox[{"-", "1"}]}], "]"}], "&"}], ",", "\[IndentingNewLine]", 
+      RowBox[{"Sort", "[", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"Table", "[", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"StringRotate", "[", 
+           RowBox[{
+            RowBox[{"aString", "<>", 
+             RowBox[{"ToString", "[", "aEOFchar", "]"}]}], ",", "i"}], "]"}], 
+          ",", 
+          RowBox[{"{", 
+           RowBox[{"i", ",", "0", ",", 
+            RowBox[{"StringLength", "[", "aString", "]"}]}], "}"}]}], "]"}], 
+        ",", 
+        RowBox[{
+         RowBox[{"OrderedQ", "[", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"Characters", "[", "#1", "]"}], ",", 
+            RowBox[{"Characters", "[", "#2", "]"}]}], "}"}], "]"}], "&"}]}], 
+       "]"}]}], "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"InverseBurrowsWheelerTransform", "[", 
+    RowBox[{"aString_", ",", "aEOFchar_"}], "]"}], ":=", 
+   "\[IndentingNewLine]", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"lastColumn", ",", "currentTable"}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"lastColumn", "=", 
+       RowBox[{"Characters", "[", "aString", "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"currentTable", "=", "lastColumn"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"While", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"StringLength", "[", 
+          RowBox[{"currentTable", "[", 
+           RowBox[{"[", "1", "]"}], "]"}], "]"}], "<", 
+         RowBox[{"StringLength", "[", "aString", "]"}]}], ",", 
+        "\[IndentingNewLine]", 
+        RowBox[{"currentTable", "=", 
+         RowBox[{"Map", "[", 
+          RowBox[{"StringJoin", ",", 
+           RowBox[{"Transpose", "[", 
+            RowBox[{"{", 
+             RowBox[{"lastColumn", ",", 
+              RowBox[{"Sort", "[", 
+               RowBox[{"currentTable", ",", 
+                RowBox[{
+                 RowBox[{"OrderedQ", "[", 
+                  RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{"Characters", "[", "#1", "]"}], ",", 
+                    RowBox[{"Characters", "[", "#2", "]"}]}], "}"}], "]"}], 
+                 "&"}]}], "]"}]}], "}"}], "]"}]}], "]"}]}]}], "]"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"StringTrim", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Select", "[", 
+          RowBox[{"currentTable", ",", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"StringTake", "[", 
+              RowBox[{"#", ",", 
+               RowBox[{"-", "1"}]}], "]"}], "\[Equal]", 
+             RowBox[{"ToString", "[", "aEOFchar", "]"}]}], "&"}]}], "]"}], 
+         "[", 
+         RowBox[{"[", "1", "]"}], "]"}], ",", 
+        RowBox[{"ToString", "[", "aEOFchar", "]"}]}], "]"}]}]}], "]"}]}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.467660358390625*^9, 3.467660361875*^9}, {
+   3.46766297184375*^9, 3.467662976359375*^9}, {3.467663234625*^9, 
+   3.4676632610625*^9}, {3.467663304890625*^9, 3.467663305046875*^9}, {
+   3.46766334084375*^9, 3.46766335596875*^9}, 3.46766349534375*^9, {
+   3.467663563765625*^9, 3.467663563828125*^9}, {3.46766360715625*^9, 
+   3.467663667015625*^9}, {3.46766588125*^9, 3.4676658890625*^9}, {
+   3.467665952625*^9, 3.46766596675*^9}, {3.467666520703125*^9, 
+   3.467666524265625*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"myString", "=", 
+  "\"\<Tomorrow has not been yesterday yet for quite some time to \
+be.\>\""}]], "Input",
+ CellChangeTimes->{{3.467658242828125*^9, 3.4676582625625*^9}, 
+   3.467662225234375*^9, {3.4676622693125*^9, 3.467662336359375*^9}, 
+   3.46766246546875*^9, {3.467662701890625*^9, 3.4676627029375*^9}, {
+   3.467662745234375*^9, 3.467662757046875*^9}, {3.467663166796875*^9, 
+   3.467663177921875*^9}, {3.467663466015625*^9, 3.46766350575*^9}, {
+   3.467664347015625*^9, 3.4676643998125*^9}, {3.467665978234375*^9, 
+   3.4676659844375*^9}, 3.467666023703125*^9}],
+
+Cell[BoxData["\<\"Tomorrow has not been yesterday yet for quite some time to \
+be.\"\>"], "Output",
+ CellChangeTimes->{
+  3.467663506375*^9, 3.4676635651875*^9, {3.467663609734375*^9, 
+   3.467663632734375*^9}, 3.46766366971875*^9, {3.46766434821875*^9, 
+   3.467664400890625*^9}, 3.46766589128125*^9, {3.46766596984375*^9, 
+   3.46766598503125*^9}, 3.467666025125*^9, 3.467666107671875*^9, 
+   3.4676665291875*^9, 3.47552366565625*^9, 3.47552771909375*^9, {
+   3.475532784875*^9, 3.475532801359375*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"bwtString", "=", 
+  RowBox[{"BurrowsWheelerTransform", "[", 
+   RowBox[{"myString", ",", "\"\<$\>\""}], "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"ibwtString", "=", 
+  RowBox[{"InverseBurrowsWheelerTransform", "[", 
+   RowBox[{"bwtString", ",", "\"\<$\>\""}], "]"}]}]}], "Input",
+ CellChangeTimes->{{3.467658988578125*^9, 3.467659023046875*^9}, {
+  3.46765913784375*^9, 3.467659140640625*^9}, {3.467660392390625*^9, 
+  3.467660408546875*^9}, {3.46766232840625*^9, 3.4676623303125*^9}, {
+  3.467666068015625*^9, 3.467666101390625*^9}, {3.467666138609375*^9, 
+  3.46766615934375*^9}, {3.4755236575*^9, 3.47552371371875*^9}, {
+  3.4755240366875*^9, 3.475524038734375*^9}}],
+
+Cell[BoxData["\<\"eottwsreeenyhd  rbtmmbetyy  tuoioe tsTfmnr oeroa eoeis  \
+$qoa  .\"\>"], "Output",
+ CellChangeTimes->{{3.46765900209375*^9, 3.46765902375*^9}, 
+   3.46765914134375*^9, 3.467659331375*^9, 3.467660409234375*^9, 
+   3.46766224309375*^9, {3.46766229325*^9, 3.467662338046875*^9}, 
+   3.4676623776875*^9, 3.467662468171875*^9, {3.467662706546875*^9, 
+   3.46766275915625*^9}, 3.467663061921875*^9, 3.4676631485625*^9, 
+   3.46766317978125*^9, {3.46766322753125*^9, 3.467663262890625*^9}, 
+   3.46766330840625*^9, {3.4676633435*^9, 3.467663358640625*^9}, {
+   3.46766347084375*^9, 3.467663509296875*^9}, 3.4676635661875*^9, {
+   3.467663610515625*^9, 3.46766363328125*^9}, 3.46766367059375*^9, {
+   3.4676643495*^9, 3.467664401875*^9}, 3.467665893078125*^9, {
+   3.467665970765625*^9, 3.46766598690625*^9}, 3.4676660265625*^9, {
+   3.4676660858125*^9, 3.46766610903125*^9}, {3.46766614484375*^9, 
+   3.467666160078125*^9}, 3.467666530109375*^9, 3.47552366728125*^9, {
+   3.475523703203125*^9, 3.475523715*^9}, 3.475524040734375*^9, 
+   3.475524900453125*^9, 3.475527720125*^9, {3.475532792671875*^9, 
+   3.475532802234375*^9}}],
+
+Cell[BoxData["\<\"Tomorrow has not been yesterday yet for quite some time to \
+be.\"\>"], "Output",
+ CellChangeTimes->{{3.46765900209375*^9, 3.46765902375*^9}, 
+   3.46765914134375*^9, 3.467659331375*^9, 3.467660409234375*^9, 
+   3.46766224309375*^9, {3.46766229325*^9, 3.467662338046875*^9}, 
+   3.4676623776875*^9, 3.467662468171875*^9, {3.467662706546875*^9, 
+   3.46766275915625*^9}, 3.467663061921875*^9, 3.4676631485625*^9, 
+   3.46766317978125*^9, {3.46766322753125*^9, 3.467663262890625*^9}, 
+   3.46766330840625*^9, {3.4676633435*^9, 3.467663358640625*^9}, {
+   3.46766347084375*^9, 3.467663509296875*^9}, 3.4676635661875*^9, {
+   3.467663610515625*^9, 3.46766363328125*^9}, 3.46766367059375*^9, {
+   3.4676643495*^9, 3.467664401875*^9}, 3.467665893078125*^9, {
+   3.467665970765625*^9, 3.46766598690625*^9}, 3.4676660265625*^9, {
+   3.4676660858125*^9, 3.46766610903125*^9}, {3.46766614484375*^9, 
+   3.467666160078125*^9}, 3.467666530109375*^9, 3.47552366728125*^9, {
+   3.475523703203125*^9, 3.475523715*^9}, 3.475524040734375*^9, 
+   3.475524900453125*^9, 3.475527720125*^9, {3.475532792671875*^9, 
+   3.475532802484375*^9}}]
+}, Open  ]]
+},
+WindowSize->{616, 644},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+FrontEndVersion->"7.0 for Microsoft Windows (32-bit) (February 18, 2009)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[545, 20, 757, 16, 52, "Input"],
+Cell[1305, 38, 3751, 94, 412, "Input"],
+Cell[CellGroupData[{
+Cell[5081, 136, 593, 10, 52, "Input"],
+Cell[5677, 148, 504, 8, 30, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6218, 161, 694, 12, 52, "Input"],
+Cell[6915, 175, 1139, 17, 30, "Output"],
+Cell[8057, 194, 1138, 17, 30, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

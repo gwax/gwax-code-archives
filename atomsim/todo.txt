@@ -1,0 +1,7 @@
+modify the way that threads are created and called
+such that they are all created at once and then they
+just sit there and wait for a command and a container
+
+damping terms
+
+temperature correction

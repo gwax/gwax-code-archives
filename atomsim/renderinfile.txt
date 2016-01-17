@@ -1,0 +1,1 @@
+povray +Iinfile.atm.pov +Oinfile.atm.png +FN +W1024 +H768 -d

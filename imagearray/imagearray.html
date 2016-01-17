@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="us-ascii" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+	<head>
+		<meta http-equiv="Content-type" content='text/html; charset="us-ascii"' />
+		<title>Fading Image Array</title>
+		<script type="text/javascript">
+<!--//[CDATA[
+// Fading Image Array v1.0.0
+// Script (c)2006 George Waksman
+
+var FadeInRate = 100;	//rate images fade in, in percent per second
+var FadeOutRate = 25;	//rate images fade out, in percent per second
+
+var ImageWidth = 320;	//width of images, in pixels
+var ImageHeight = 240;	//height of images, in pixels
+var ImageSpacing = 5;	//spacing between images, in pixels
+
+var ImageRows = 3;	//rows of images
+var ImageCols = 3;	//columns of images
+
+var AllImages = new Array(ImageRows);
+AllImages[0] = new Array(ImageCols);
+AllImages[0][0] = "Photo07.jpg";
+AllImages[0][1] = "Photo11.jpg";
+AllImages[0][2] = "Photo16.jpg";
+AllImages[1] = new Array(ImageCols);
+AllImages[1][0] = "Photo17.jpg";
+AllImages[1][1] = "Photo086.jpg";
+AllImages[1][2] = "Photo092.jpg";
+AllImages[2] = new Array(ImageCols);
+AllImages[2][0] = "Photo116.jpg";
+AllImages[2][1] = "Photo121.jpg";
+AllImages[2][2] = "Photo186.jpg";
+
+// !!------- You can stop paying attention to what's going on now -------!! //
+
+var i;
+var j;
+var AllTimeouts = new Array(ImageRows);
+var AllOpacities = new Array(ImageRows);
+for(i=0; i<ImageRows; i++)
+{
+	AllTimeouts[i] = new Array(ImageCols);
+	AllOpacities[i] = new Array(ImageCols);
+	for(j=0; j<ImageCols; j++)
+	{
+		AllOpacities[i][j] = 0;
+	}
+}
+
+window.onload = function()
+	{
+		var i;
+		var j;
+		var thisImage;
+		for(i=0; i<ImageRows; i++)
+		{
+			for(j=0; j<ImageCols; j++)
+			{
+				thisImage = document.getElementById("r"+i+"c"+j);
+				setOpacity(thisImage, 0);
+				thisImage.style.visibility = "visible";
+			}
+		}
+	}
+	
+function setOpacity(obj, opacity) {
+  opacity = (opacity == 100)?99.999:opacity;
+  
+  // IE/Win
+  obj.style.filter = "alpha(opacity:"+opacity+")";
+  
+  // Safari<1.2, Konqueror
+  obj.style.KHTMLOpacity = opacity/100;
+  
+  // Older Mozilla and Firefox
+  obj.style.MozOpacity = opacity/100;
+  
+  // Safari 1.2, newer Firefox and Mozilla, CSS3
+  obj.style.opacity = opacity/100;
+}
+
+function fadeIn(row,col,opacity) {
+	if (document.getElementById("r"+row+"c"+col)) {
+		obj = document.getElementById("r"+row+"c"+col);
+		if (opacity <= 100) {
+			setOpacity(obj, opacity);
+			opacity += FadeInRate/10.0;
+			AllTimeouts[row][col] = window.setTimeout("fadeIn("+row+","+col+","+opacity+")", 100);
+		}
+		AllOpacities[row][col] = opacity;
+	}
+}
+
+function fadeOut(row,col,opacity) {
+	if (document.getElementById("r"+row+"c"+col)) {
+		obj = document.getElementById("r"+row+"c"+col);
+		if (opacity >= 0) {
+			setOpacity(obj, opacity);
+			opacity -= FadeOutRate/10.0;
+			AllTimeouts[row][col] = window.setTimeout("fadeOut("+row+","+col+","+opacity+")", 100);
+		}
+		AllOpacities[row][col] = opacity;
+	}
+}
+
+function onImage(row,col) {
+	clearTimeout(AllTimeouts[row][col]);
+	fadeIn(row,col,AllOpacities[row][col]);
+}
+
+function offImage(row,col) {
+	clearTimeout(AllTimeouts[row][col]);
+	fadeOut(row,col,AllOpacities[row][col]);
+}
+
+//]]-->
+		</script>
+	</head>
+	<body style="background-color: Black; color: White;">
+		<script type="text/javascript">
+<!--//[CDATA[
+var i;
+var j;
+var thisImage;
+
+document.write("<table style=\"border: 1px solid #333333; margin-left: auto; margin-right: auto; border-spacing: "+ImageSpacing+"px;\">");
+for(i=0; i<ImageRows; i++)
+{
+	document.write("<tr>");
+	for(j=0; j<ImageCols; j++)
+	{
+		document.write("<td>");
+		document.write("<img id=\"r"+i+"c"+j+"\" src=\""+AllImages[i][j]+"\" alt=\""+AllImages[i][j]+"\" width=\""+ImageWidth+"\" height=\""+ImageHeight+"\" onMouseOver=\"onImage("+i+","+j+");return true;\" onMouseOut=\"offImage("+i+","+j+");return true;\" />");
+		thisImage = document.getElementById("r"+i+"c"+j);
+		thisImage.style.visibility = "hidden";
+		document.write("</td>");
+	}
+	document.write("</tr>");
+}
+document.write("</table>");
+//]]-->
+		</script>
+	</body>
+</html>
+

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="us-ascii" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+	<head>
+		<meta http-equiv="Content-type" content='text/html; charset="us-ascii"' />
+		<title>Random Sinfest Comic</title>
+
+		<script type="text/javascript">
+<!--//[CDATA[
+// Random Sinfest Comic Script v1.1.1
+// Script (c)2004 George Waksman
+
+// For all Sinfest related material visit sinfest.net I have no claim of ownership of
+// the actual comics, they are the work of Tatsuya Ishida
+
+//These scripts randomly select a comic from the sinfest archives and creates a page
+//with that comic and the date. I originally wrote this page to be used as an Active
+//Desktop page so that I could have a random sinfest page on my desktop all the time
+//and since active desktop doesn't allow links, I have used scripting so that when
+//you click on the comic it will refresh the page and select another random comic.
+//As of version 1.1, the page will also refresh every 5 minutes and select a new
+//comic.
+
+//As another note, the probabilities are not even, especially early in the year,
+//however, they're not far enough off for me to care enough to try to improve it
+
+//No content has been copied, all are links to the original, which I highly reccomend
+
+//Version history
+
+//v1.1.1
+//Added fix for missing comics 02/29/04-03/07/2004
+
+//v1.1
+//Added timeout to cause refresh after 5 minutes
+
+//v1.0
+//All work completed, tested and debugged.
+//Seems to get all comics includeing the current one.
+
+var refreshdelay = 300000;	//reload the page every [refreshdelay milliseconds]
+
+var now = new Date();
+var yearadjust;
+
+if(now.getYear() > 1900)	//function to figure out whether the browser counts years from 0 or 1900
+{
+	yearadjust = 0;
+}
+else
+{
+	yearadjust = 1900;
+}
+
+function getyear()			//function to get a year between 2000 (when sinfest started) and the present
+{
+	var year;
+	var years;
+	var start = 2000;
+	years = (now.getYear() + yearadjust - 2000 + now.getMonth()/12 + now.getDate()/30);
+	year = start + Math.floor(Math.random() * years);
+	return(year);
+}
+
+function getmonth(year)		//function to get a month; 1-12 for previous years and 1-present for current year
+{
+	var month;
+	var months;
+	var start = 1;
+
+	if (year == (yearadjust + now.getYear()))	//if it's the current year restrict allowed months
+	{
+		months = (now.getMonth() + now.getDate()/30);
+	}
+	else
+	{
+		months = 12;
+	}
+
+	month = start + Math.floor(Math.random() * months);
+	return(month);
+}
+
+function getdate(year, month)	//function to get a day in the selected month
+{								//thankfully, except for a few mistakes early
+	var date;					//on, there has been a sinfest every day
+	var days;
+	var start;
+
+	if(year == 2000 && month == 1)	// 01/2000
+	{
+		start = 17;	//no comics 1st through 17th
+	}
+	else if(year == 2004 && month == 3)	// 03/2004
+	{
+		start = 8;	//no comics 1st through 7th
+	}
+	else
+	{
+		start = 1;
+	}
+
+
+	if(year == (yearadjust + now.getYear()) && month == (1 + now.getMonth()))
+	{
+		days = now.getDate();
+	}
+	else if(month == 2)
+	{
+		if(Math.floor(year/4) == year/4) //February, check for leap year
+		{
+			days = 29;
+		}
+		else
+		{
+			days = 28;
+		}
+	}
+	else if(month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)	//30 or 31 days this month?
+	{
+		days = 31;
+	}
+	else
+	{
+		days = 30;
+	}
+
+
+	if(year == 2000 && month == 1)	//no comic January 31
+	{
+		days = 30;
+	}
+	else if(year == 2000 && month == 2)	//only 21 comics February, 2000
+	{
+		days = 21;
+	}
+	else if(year == 2004 && month == 2)	//only 28 comics February, 2004
+	{
+		days = 28;
+	}
+
+
+	date = start + Math.floor(Math.random() * (days-start));
+	return(date);
+}
+
+function getimage()
+{
+	var comic;
+	var year;
+	var month;
+	var date;
+
+	year = getyear();
+	month = getmonth(year);
+	date = getdate(year, month);
+
+	comic = year*10000 + month*100 + date;	//put it all in a nice format YYYYMMDD
+	return(comic);
+}
+
+function refresh()
+{
+    window.location.replace(window.location.pathname);
+}
+//]]-->
+		</script>
+	</head>
+
+
+	<body>
+		<script type="text/javascript">
+<!--//[CDATA[
+var imagenumber = getimage();	//getimage to do everything
+var year = Math.floor(imagenumber/10000);	//redundant but not hard to separate out year
+var month = Math.floor((imagenumber-10000*year)/100);	//month
+var date = (imagenumber-10000*year-100*month);			//date
+
+//now make the actual page
+document.write("<center>");
+document.write("<img alt='compliments to tatsuya ishida for writing sinfest, see http://sinfest.net' src='http://sinfest.net/comics/sf" + imagenumber + ".gif' onClick='refresh()' /><br />"); //here's the image, nice of them to make it easy for me
+document.write(month + "/" + date + "/" + year);	//display the date
+document.write("</center>"); //done
+window.setTimeout("refresh()", refreshdelay);
+//]]-->
+		</script>
+
+	</body>
+</html>

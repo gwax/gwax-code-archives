@@ -1,0 +1,888 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 7.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[     33198,        879]
+NotebookOptionsPosition[     31736,        829]
+NotebookOutlinePosition[     32082,        844]
+CellTagsIndexPosition[     32039,        841]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"GenerationSize", "=", "20"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"GenerationPairSize", "=", 
+   RowBox[{"GenerationSize", "/", "2"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ChildSize", "=", "8"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"CreateChild", ":=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"RandomInteger", "[", "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", "0", ",", 
+       RowBox[{"ChildSize", "-", "1"}]}], "}"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ChildToNumber", "[", "aChild_", "]"}], ":=", 
+   RowBox[{"N", "[", 
+    RowBox[{
+     RowBox[{"1", "+", 
+      RowBox[{
+       RowBox[{"Total", "[", 
+        RowBox[{
+         RowBox[{"Table", "[", 
+          RowBox[{
+           RowBox[{"2", "^", "i"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"i", ",", "0", ",", 
+             RowBox[{"ChildSize", "-", "1"}]}], "}"}]}], "]"}], "*", 
+         "aChild"}], "]"}], "/", 
+       RowBox[{"2", "^", "ChildSize"}]}]}], ",", "10"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"NumberFitness", "[", "aNumber_", "]"}], ":=", 
+   RowBox[{"1", "-", 
+    RowBox[{
+     RowBox[{"Abs", "[", 
+      RowBox[{
+       RowBox[{"aNumber", "^", "2"}], "-", "2"}], "]"}], "/", "2"}]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"GenerationToFitness", "[", "aGeneration_", "]"}], ":=", 
+   RowBox[{"Map", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"NumberFitness", "[", 
+       RowBox[{"ChildToNumber", "[", "#", "]"}], "]"}], "&"}], ",", 
+     "aGeneration"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ChildPointMutate", "[", "aChild_", "]"}], ":=", 
+   RowBox[{"ReplacePart", "[", 
+    RowBox[{"aChild", ",", 
+     RowBox[{
+      RowBox[{"RandomInteger", "[", 
+       RowBox[{"{", 
+        RowBox[{"1", ",", 
+         RowBox[{"Length", "[", "aChild", "]"}]}], "}"}], "]"}], "\[Rule]", 
+      RowBox[{"RandomInteger", "[", "]"}]}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ChildrenCrossMutate", "[", 
+    RowBox[{"aChild_", ",", "bChild_"}], "]"}], ":=", "\[IndentingNewLine]", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "aPos", ",", "bPos", ",", "a1", ",", "a2", ",", "a3", ",", "b1", ",", 
+       "b2", ",", "b3", ",", "CrossSize"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"CrossSize", "=", 
+       RowBox[{"RandomInteger", "[", 
+        RowBox[{"{", 
+         RowBox[{"1", ",", 
+          RowBox[{"Floor", "[", 
+           RowBox[{"ChildSize", "/", "2"}], "]"}]}], "}"}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"aPos", "=", 
+       RowBox[{"RandomInteger", "[", 
+        RowBox[{"{", 
+         RowBox[{"1", ",", 
+          RowBox[{"1", "+", "ChildSize", "-", "CrossSize"}]}], "}"}], "]"}]}],
+       ";", "\[IndentingNewLine]", 
+      RowBox[{"bPos", "=", 
+       RowBox[{"RandomInteger", "[", 
+        RowBox[{"{", 
+         RowBox[{"1", ",", 
+          RowBox[{"1", "+", "ChildSize", "-", "CrossSize"}]}], "}"}], "]"}]}],
+       ";", "\[IndentingNewLine]", 
+      RowBox[{"a1", "=", 
+       RowBox[{"aChild", "[", 
+        RowBox[{"[", 
+         RowBox[{"1", ";;", 
+          RowBox[{"(", 
+           RowBox[{"aPos", "-", "1"}], ")"}]}], "]"}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"a2", "=", 
+       RowBox[{"aChild", "[", 
+        RowBox[{"[", 
+         RowBox[{"aPos", ";;", 
+          RowBox[{"(", 
+           RowBox[{"aPos", "+", "CrossSize", "-", "1"}], ")"}]}], "]"}], 
+        "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"a3", "=", 
+       RowBox[{"aChild", "[", 
+        RowBox[{"[", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"aPos", "+", "CrossSize"}], ")"}], ";;", "ChildSize"}], 
+         "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"b1", "=", 
+       RowBox[{"bChild", "[", 
+        RowBox[{"[", 
+         RowBox[{"1", ";;", 
+          RowBox[{"(", 
+           RowBox[{"bPos", "-", "1"}], ")"}]}], "]"}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"b2", "=", 
+       RowBox[{"bChild", "[", 
+        RowBox[{"[", 
+         RowBox[{"bPos", ";;", 
+          RowBox[{"(", 
+           RowBox[{"bPos", "+", "CrossSize", "-", "1"}], ")"}]}], "]"}], 
+        "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"b3", "=", 
+       RowBox[{"bChild", "[", 
+        RowBox[{"[", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"bPos", "+", "CrossSize"}], ")"}], ";;", "ChildSize"}], 
+         "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Join", "[", 
+         RowBox[{"a1", ",", "b2", ",", "a3"}], "]"}], ",", 
+        RowBox[{"Join", "[", 
+         RowBox[{"b1", ",", "a2", ",", "b3"}], "]"}]}], "}"}]}]}], "]"}]}], 
+  ";"}]}], "Input",
+ CellChangeTimes->CompressedData["
+1:eJwtyr9LQlEYh/E3cajIKNpChEAwoqXbFC31L9TaIPdSicvNaIqgUwRBPygk
+wsHVIcE2pzYnB4fkZsOdWoJcLpQULV2q9znD4cPzfc+M669tJkQk/ff+FTMX
+nPf6q2IeQ9x6wWCgSvubPozpUuJCO5nEnRFVpsfopQn6wFpwsLvIfXud9q0/
+LnvKo3eP6NtjLFXYs1Vs19idOkZN3Ohwj5/owjOuhJiLcG/Av2tra/hSTY9i
+nFfNq0efnNJXKLM39EOFPqvSZevHHcbWYreh//bRvIX4jjLUp6dQ5j9p5wuD
+8XvdFyZVs5zBsvoLMzvc6w==
+  "]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{"CreateChild", "\[IndentingNewLine]", 
+ RowBox[{"ChildToNumber", "[", "%", "]"}], "\[IndentingNewLine]", 
+ RowBox[{"NumberFitness", "[", "%", "]"}], "\[IndentingNewLine]", 
+ RowBox[{"N", "[", 
+  RowBox[{
+   RowBox[{"Sqrt", "[", "2", "]"}], ",", "10"}], "]"}]}], "Input",
+ CellChangeTimes->{{3.467402943546875*^9, 3.467402944859375*^9}, {
+  3.46740310625*^9, 3.467403113234375*^9}, {3.46740316896875*^9, 
+  3.467403174546875*^9}, {3.46740391809375*^9, 3.4674039226875*^9}, {
+  3.4674064016875*^9, 3.46740640196875*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "0", ",", "1", ",", "0", ",", "0", ",", "1", ",", "1", ",", "0", ",", "0"}],
+   "}"}]], "Output",
+ CellChangeTimes->{{3.467402946203125*^9, 3.467402979*^9}, {
+   3.467403114296875*^9, 3.46740313709375*^9}, {3.467403175265625*^9, 
+   3.467403194453125*^9}, 3.46740326128125*^9, 3.46740329821875*^9, {
+   3.46740334225*^9, 3.467403363828125*^9}, 3.467403397265625*^9, {
+   3.467403668765625*^9, 3.467403681421875*^9}, {3.46740392321875*^9, 
+   3.467403932890625*^9}, {3.467404060125*^9, 3.467404117296875*^9}, 
+   3.46740472796875*^9, 3.467405177203125*^9, 3.467405396015625*^9, {
+   3.467406089890625*^9, 3.467406113421875*^9}, 3.4674064024375*^9, {
+   3.467406535921875*^9, 3.467406565921875*^9}, 3.46740667415625*^9, 
+   3.467472423671875*^9, 3.467472525578125*^9, 3.467472600921875*^9, 
+   3.467472715375*^9, 3.467473141921875*^9}],
+
+Cell[BoxData["1.1953125`10."], "Output",
+ CellChangeTimes->{{3.467402946203125*^9, 3.467402979*^9}, {
+   3.467403114296875*^9, 3.46740313709375*^9}, {3.467403175265625*^9, 
+   3.467403194453125*^9}, 3.46740326128125*^9, 3.46740329821875*^9, {
+   3.46740334225*^9, 3.467403363828125*^9}, 3.467403397265625*^9, {
+   3.467403668765625*^9, 3.467403681421875*^9}, {3.46740392321875*^9, 
+   3.467403932890625*^9}, {3.467404060125*^9, 3.467404117296875*^9}, 
+   3.46740472796875*^9, 3.467405177203125*^9, 3.467405396015625*^9, {
+   3.467406089890625*^9, 3.467406113421875*^9}, 3.4674064024375*^9, {
+   3.467406535921875*^9, 3.467406565921875*^9}, 3.46740667415625*^9, 
+   3.467472423671875*^9, 3.467472525578125*^9, 3.467472600921875*^9, 
+   3.467472715375*^9, 3.467473141921875*^9}],
+
+Cell[BoxData["0.714385986328125`9.698970004336019"], "Output",
+ CellChangeTimes->{{3.467402946203125*^9, 3.467402979*^9}, {
+   3.467403114296875*^9, 3.46740313709375*^9}, {3.467403175265625*^9, 
+   3.467403194453125*^9}, 3.46740326128125*^9, 3.46740329821875*^9, {
+   3.46740334225*^9, 3.467403363828125*^9}, 3.467403397265625*^9, {
+   3.467403668765625*^9, 3.467403681421875*^9}, {3.46740392321875*^9, 
+   3.467403932890625*^9}, {3.467404060125*^9, 3.467404117296875*^9}, 
+   3.46740472796875*^9, 3.467405177203125*^9, 3.467405396015625*^9, {
+   3.467406089890625*^9, 3.467406113421875*^9}, 3.4674064024375*^9, {
+   3.467406535921875*^9, 3.467406565921875*^9}, 3.46740667415625*^9, 
+   3.467472423671875*^9, 3.467472525578125*^9, 3.467472600921875*^9, 
+   3.467472715375*^9, 3.4674731419375*^9}],
+
+Cell[BoxData["1.41421356237309504880168872421`10."], "Output",
+ CellChangeTimes->{{3.467402946203125*^9, 3.467402979*^9}, {
+   3.467403114296875*^9, 3.46740313709375*^9}, {3.467403175265625*^9, 
+   3.467403194453125*^9}, 3.46740326128125*^9, 3.46740329821875*^9, {
+   3.46740334225*^9, 3.467403363828125*^9}, 3.467403397265625*^9, {
+   3.467403668765625*^9, 3.467403681421875*^9}, {3.46740392321875*^9, 
+   3.467403932890625*^9}, {3.467404060125*^9, 3.467404117296875*^9}, 
+   3.46740472796875*^9, 3.467405177203125*^9, 3.467405396015625*^9, {
+   3.467406089890625*^9, 3.467406113421875*^9}, 3.4674064024375*^9, {
+   3.467406535921875*^9, 3.467406565921875*^9}, 3.46740667415625*^9, 
+   3.467472423671875*^9, 3.467472525578125*^9, 3.467472600921875*^9, 
+   3.467472715375*^9, 3.467473141953125*^9}]
+}, Open  ]],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Generation1", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{"CreateChild", ",", 
+     RowBox[{"{", "GenerationSize", "}"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Fitness1", "=", 
+   RowBox[{"GenerationToFitness", "[", "Generation1", "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"bestPosition1", "=", 
+   RowBox[{
+    RowBox[{"Ordering", "[", 
+     RowBox[{"Fitness1", ",", 
+      RowBox[{"-", "1"}]}], "]"}], "[", 
+    RowBox[{"[", "1", "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"bestChildEver", "=", 
+   RowBox[{"Generation1", "[", 
+    RowBox[{"[", "bestPosition1", "]"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"bestFitnessEver", "=", 
+   RowBox[{"Fitness1", "[", 
+    RowBox[{"[", "bestPosition1", "]"}], "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.467403270109375*^9, 3.467403332671875*^9}, {
+   3.46740340190625*^9, 3.467403417375*^9}, {3.46740350121875*^9, 
+   3.4674035896875*^9}, 3.467403648671875*^9, 3.4674041231875*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Histogram", "[", "Fitness1", "]"}]], "Input",
+ CellChangeTimes->{{3.467472449234375*^9, 3.467472455078125*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[
+  {RGBColor[0.798413061722744, 0.824719615472648, 0.968322270542458], 
+   EdgeForm[Opacity[0.7]], {}, 
+   {RGBColor[0.798413061722744, 0.824719615472648, 0.968322270542458], 
+    EdgeForm[Opacity[0.7]], 
+    TagBox[
+     TooltipBox[
+      TagBox[
+       DynamicBox[{
+         FEPrivate`If[
+          CurrentValue["MouseOver"], 
+          EdgeForm[{
+            GrayLevel[0.5], 
+            AbsoluteThickness[1.5], 
+            Opacity[0.66]}], {}, {}], 
+         RectangleBox[{0, 0}, {
+           Rational[1, 2], 4}]},
+        ImageSizeCache->{{12.750000000000004`, 182.6704081632653}, {
+         48.63698683523198, 97.1279567085886}}],
+       StatusArea[#, 4]& ,
+       TagBoxNote->"4"],
+      StyleBox["4", {
+        GrayLevel[0]}, StripOnInput -> False]],
+     Annotation[#, 
+      Style[4, {
+        GrayLevel[0]}], "Tooltip"]& ], 
+    TagBox[
+     TooltipBox[
+      TagBox[
+       DynamicBox[{
+         FEPrivate`If[
+          CurrentValue["MouseOver"], 
+          EdgeForm[{
+            GrayLevel[0.5], 
+            AbsoluteThickness[1.5], 
+            Opacity[0.66]}], {}, {}], 
+         RectangleBox[{
+           Rational[1, 2], 0}, {1, 16}]},
+        ImageSizeCache->{{182.1704081632653, 
+         352.0908163265306}, {-95.33592278483788, 97.1279567085886}}],
+       StatusArea[#, 16]& ,
+       TagBoxNote->"16"],
+      StyleBox["16", {
+        GrayLevel[0]}, StripOnInput -> False]],
+     Annotation[#, 
+      Style[16, {
+        GrayLevel[0]}], "Tooltip"]& ]}, {}, {}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->{True, True},
+  AxesOrigin->{0, 0},
+  FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+  PlotRange->{{0, 1}, {All, All}},
+  PlotRangePadding->{{
+     Scaled[0.02], 
+     Scaled[0.02]}, {
+     Scaled[0.02], 
+     Scaled[0.1]}},
+  Ticks->{Automatic, Automatic}]], "Output",
+ CellChangeTimes->{3.467472456703125*^9, 3.467472533140625*^9, 
+  3.46747260303125*^9, 3.467472718046875*^9, 3.467473065359375*^9, 
+  3.46747314475*^9}]
+}, Open  ]],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"generationNumber", "=", "1"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"previousGeneration", "=", "Generation1"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"previousFitness", "=", "Fitness1"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.46740371703125*^9, 3.467403732828125*^9}, {
+  3.46740386028125*^9, 3.467403885625*^9}, {3.467403988734375*^9, 
+  3.467403994796875*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Print", "[", 
+   RowBox[{"\"\<BestEver    = \>\"", ",", 
+    RowBox[{"ChildToNumber", "[", "bestChildEver", "]"}]}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Print", "[", 
+   RowBox[{"\"\<BestEver^2  = \>\"", ",", 
+    RowBox[{
+     RowBox[{"ChildToNumber", "[", "bestChildEver", "]"}], "^", "2"}]}], 
+   "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Print", "[", 
+   RowBox[{"\"\<BestFitness = \>\"", ",", "bestFitnessEver"}], "]"}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.46740359303125*^9, 3.46740363790625*^9}, {
+  3.467405777703125*^9, 3.467405835625*^9}, {3.467405887828125*^9, 
+  3.467405890734375*^9}, {3.467406421125*^9, 3.467406421421875*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"BestEver    = \"\>", "\[InvisibleSpace]", "1.40234375`10."}],
+  SequenceForm["BestEver    = ", 1.40234375`10.],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.467405904734375*^9, 3.4674060603125*^9, {3.467406092921875*^9, 
+   3.467406119171875*^9}, {3.467406416140625*^9, 3.467406422015625*^9}, 
+   3.46740653884375*^9, 3.467406570265625*^9, 3.467406680671875*^9, 
+   3.467472480328125*^9, 3.467472537109375*^9, 3.467472608515625*^9, 
+   3.467472720484375*^9, 3.4674730671875*^9, 3.467473147359375*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"BestEver^2  = \"\>", "\[InvisibleSpace]", 
+   "1.9665679931640625`9.698970004336017"}],
+  SequenceForm["BestEver^2  = ", 1.9665679931640625`9.698970004336017],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.467405904734375*^9, 3.4674060603125*^9, {3.467406092921875*^9, 
+   3.467406119171875*^9}, {3.467406416140625*^9, 3.467406422015625*^9}, 
+   3.46740653884375*^9, 3.467406570265625*^9, 3.467406680671875*^9, 
+   3.467472480328125*^9, 3.467472537109375*^9, 3.467472608515625*^9, 
+   3.467472720484375*^9, 3.4674730671875*^9, 3.467473147375*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"BestFitness = \"\>", "\[InvisibleSpace]", 
+   "0.98328399658203125`9.698970004336017"}],
+  SequenceForm["BestFitness = ", 0.98328399658203125`9.698970004336017],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.467405904734375*^9, 3.4674060603125*^9, {3.467406092921875*^9, 
+   3.467406119171875*^9}, {3.467406416140625*^9, 3.467406422015625*^9}, 
+   3.46740653884375*^9, 3.467406570265625*^9, 3.467406680671875*^9, 
+   3.467472480328125*^9, 3.467472537109375*^9, 3.467472608515625*^9, 
+   3.467472720484375*^9, 3.4674730671875*^9, 3.467473147390625*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"nextGeneration", "=", 
+   RowBox[{"RandomSample", "[", 
+    RowBox[{
+     RowBox[{"previousFitness", "\[Rule]", "previousGeneration"}], ",", 
+     RowBox[{"Floor", "[", 
+      RowBox[{"3", "*", 
+       RowBox[{"GenerationSize", "/", "5"}]}], "]"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"nextGeneration", "=", 
+   RowBox[{"Join", "[", 
+    RowBox[{"nextGeneration", ",", 
+     RowBox[{"RandomChoice", "[", 
+      RowBox[{
+       RowBox[{"previousFitness", "\[Rule]", "previousGeneration"}], ",", 
+       RowBox[{"GenerationSize", "-", 
+        RowBox[{"Length", "[", "nextGeneration", "]"}]}]}], "]"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"nextGenerationPairs", "=", "\[IndentingNewLine]", 
+   RowBox[{"Transpose", "[", "\[IndentingNewLine]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"nextGeneration", "[", 
+       RowBox[{"[", 
+        RowBox[{"1", ";;", "GenerationPairSize"}], "]"}], "]"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{"nextGeneration", "[", 
+       RowBox[{"[", 
+        RowBox[{
+         RowBox[{"GenerationPairSize", "+", "1"}], ";;", "GenerationSize"}], 
+        "]"}], "]"}]}], "}"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"nextGenerationPairs", "=", 
+   RowBox[{"Map", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"ChildrenCrossMutate", "[", 
+       RowBox[{
+        RowBox[{"#", "[", 
+         RowBox[{"[", "1", "]"}], "]"}], ",", 
+        RowBox[{"#", "[", 
+         RowBox[{"[", "2", "]"}], "]"}]}], "]"}], "&"}], ",", 
+     "nextGenerationPairs"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"nextGeneration", "=", 
+   RowBox[{"Join", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Transpose", "[", "nextGenerationPairs", "]"}], "[", 
+      RowBox[{"[", "1", "]"}], "]"}], ",", 
+     RowBox[{
+      RowBox[{"Transpose", "[", "nextGenerationPairs", "]"}], "[", 
+      RowBox[{"[", "2", "]"}], "]"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"nextGeneration", "=", 
+   RowBox[{"Map", "[", 
+    RowBox[{"ChildPointMutate", ",", "nextGeneration"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"nextFitness", "=", 
+   RowBox[{"GenerationToFitness", "[", "nextGeneration", "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"bestPositionThisGen", "=", 
+   RowBox[{
+    RowBox[{"Ordering", "[", 
+     RowBox[{"nextFitness", ",", 
+      RowBox[{"-", "1"}]}], "]"}], "[", 
+    RowBox[{"[", "1", "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"bestChildThisGen", "=", 
+   RowBox[{"nextGeneration", "[", 
+    RowBox[{"[", "bestPositionThisGen", "]"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"bestFitnessThisGen", "=", 
+   RowBox[{"nextFitness", "[", 
+    RowBox[{"[", "bestPositionThisGen", "]"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"If", "[", 
+   RowBox[{
+    RowBox[{"bestFitnessThisGen", ">", "bestFitnessEver"}], ",", 
+    RowBox[{
+     RowBox[{"bestChildEver", "=", "bestChildThisGen"}], ";", 
+     RowBox[{"bestFitnessEver", "=", "bestFitnessThisGen"}], ";"}]}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"generationNumber", "=", 
+   RowBox[{"generationNumber", "+", "1"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"previousGeneration", "=", "nextGeneration"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"previousFitness", "=", "nextFitness"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Print", "[", 
+   RowBox[{"\"\<Real        = \>\"", ",", 
+    RowBox[{"N", "[", 
+     RowBox[{
+      RowBox[{"Sqrt", "[", "2", "]"}], ",", "10"}], "]"}]}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Print", "[", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Print", "[", 
+   RowBox[{"\"\<Generation  = \>\"", ",", "generationNumber"}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Print", "[", 
+   RowBox[{"\"\<BestThis    = \>\"", ",", 
+    RowBox[{"ChildToNumber", "[", "bestChildThisGen", "]"}]}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Print", "[", 
+   RowBox[{"\"\<BestThis^2  = \>\"", ",", 
+    RowBox[{
+     RowBox[{"ChildToNumber", "[", "bestChildThisGen", "]"}], "^", "2"}]}], 
+   "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Print", "[", 
+   RowBox[{"\"\<BestFitThis = \>\"", ",", "bestFitnessThisGen"}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Print", "[", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Print", "[", 
+   RowBox[{"\"\<BestEver    = \>\"", ",", 
+    RowBox[{"ChildToNumber", "[", "bestChildEver", "]"}]}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Print", "[", 
+   RowBox[{"\"\<BestEver^2  = \>\"", ",", 
+    RowBox[{
+     RowBox[{"ChildToNumber", "[", "bestChildEver", "]"}], "^", "2"}]}], 
+   "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Print", "[", 
+   RowBox[{"\"\<BestFitness = \>\"", ",", "bestFitnessEver"}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"Histogram", "[", "nextFitness", "]"}]}], "Input",
+ CellChangeTimes->{{3.467403963046875*^9, 3.467404019765625*^9}, {
+  3.467404142953125*^9, 3.467404215265625*^9}, {3.467404533296875*^9, 
+  3.46740455128125*^9}, {3.46740529765625*^9, 3.467405368546875*^9}, {
+  3.467405407546875*^9, 3.46740574603125*^9}, {3.4674058519375*^9, 
+  3.467405860328125*^9}, {3.467405922140625*^9, 3.4674060565*^9}, {
+  3.467406142859375*^9, 3.46740617790625*^9}, {3.46740642725*^9, 
+  3.46740647428125*^9}, {3.4674724909375*^9, 3.467472501*^9}, {
+  3.467472637171875*^9, 3.467472661125*^9}, {3.46747286671875*^9, 
+  3.467472965359375*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Real        = \"\>", "\[InvisibleSpace]", 
+   "1.41421356237309504880168872421`10."}],
+  SequenceForm["Real        = ", 1.41421356237309504880168872421`10.],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.46740606278125*^9, {3.46740609396875*^9, 3.467406180125*^9}, {
+   3.467406423453125*^9, 3.4674064899375*^9}, {3.46740654203125*^9, 
+   3.46740660703125*^9}, {3.467406684328125*^9, 3.4674066994375*^9}, {
+   3.467472504546875*^9, 3.46747258878125*^9}, {3.46747262271875*^9, 
+   3.467472771234375*^9}, {3.46747282403125*^9, 3.467472841625*^9}, {
+   3.46747296684375*^9, 3.467472999953125*^9}, {3.467473037734375*^9, 
+   3.467473161390625*^9}}],
+
+Cell[BoxData["\<\"\"\>"], "Print",
+ CellChangeTimes->{
+  3.46740606278125*^9, {3.46740609396875*^9, 3.467406180125*^9}, {
+   3.467406423453125*^9, 3.4674064899375*^9}, {3.46740654203125*^9, 
+   3.46740660703125*^9}, {3.467406684328125*^9, 3.4674066994375*^9}, {
+   3.467472504546875*^9, 3.46747258878125*^9}, {3.46747262271875*^9, 
+   3.467472771234375*^9}, {3.46747282403125*^9, 3.467472841625*^9}, {
+   3.46747296684375*^9, 3.467472999953125*^9}, {3.467473037734375*^9, 
+   3.467473161390625*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Generation  = \"\>", "\[InvisibleSpace]", "8"}],
+  SequenceForm["Generation  = ", 8],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.46740606278125*^9, {3.46740609396875*^9, 3.467406180125*^9}, {
+   3.467406423453125*^9, 3.4674064899375*^9}, {3.46740654203125*^9, 
+   3.46740660703125*^9}, {3.467406684328125*^9, 3.4674066994375*^9}, {
+   3.467472504546875*^9, 3.46747258878125*^9}, {3.46747262271875*^9, 
+   3.467472771234375*^9}, {3.46747282403125*^9, 3.467472841625*^9}, {
+   3.46747296684375*^9, 3.467472999953125*^9}, {3.467473037734375*^9, 
+   3.46747316140625*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"BestThis    = \"\>", "\[InvisibleSpace]", "1.37890625`10."}],
+  SequenceForm["BestThis    = ", 1.37890625`10.],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.46740606278125*^9, {3.46740609396875*^9, 3.467406180125*^9}, {
+   3.467406423453125*^9, 3.4674064899375*^9}, {3.46740654203125*^9, 
+   3.46740660703125*^9}, {3.467406684328125*^9, 3.4674066994375*^9}, {
+   3.467472504546875*^9, 3.46747258878125*^9}, {3.46747262271875*^9, 
+   3.467472771234375*^9}, {3.46747282403125*^9, 3.467472841625*^9}, {
+   3.46747296684375*^9, 3.467472999953125*^9}, {3.467473037734375*^9, 
+   3.46747316140625*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"BestThis^2  = \"\>", "\[InvisibleSpace]", 
+   "1.9013824462890625`9.698970004336022"}],
+  SequenceForm["BestThis^2  = ", 1.9013824462890625`9.698970004336022],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.46740606278125*^9, {3.46740609396875*^9, 3.467406180125*^9}, {
+   3.467406423453125*^9, 3.4674064899375*^9}, {3.46740654203125*^9, 
+   3.46740660703125*^9}, {3.467406684328125*^9, 3.4674066994375*^9}, {
+   3.467472504546875*^9, 3.46747258878125*^9}, {3.46747262271875*^9, 
+   3.467472771234375*^9}, {3.46747282403125*^9, 3.467472841625*^9}, {
+   3.46747296684375*^9, 3.467472999953125*^9}, {3.467473037734375*^9, 
+   3.46747316140625*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"BestFitThis = \"\>", "\[InvisibleSpace]", 
+   "0.95069122314453125`9.698970004336022"}],
+  SequenceForm["BestFitThis = ", 0.95069122314453125`9.698970004336022],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.46740606278125*^9, {3.46740609396875*^9, 3.467406180125*^9}, {
+   3.467406423453125*^9, 3.4674064899375*^9}, {3.46740654203125*^9, 
+   3.46740660703125*^9}, {3.467406684328125*^9, 3.4674066994375*^9}, {
+   3.467472504546875*^9, 3.46747258878125*^9}, {3.46747262271875*^9, 
+   3.467472771234375*^9}, {3.46747282403125*^9, 3.467472841625*^9}, {
+   3.46747296684375*^9, 3.467472999953125*^9}, {3.467473037734375*^9, 
+   3.46747316140625*^9}}],
+
+Cell[BoxData["\<\"\"\>"], "Print",
+ CellChangeTimes->{
+  3.46740606278125*^9, {3.46740609396875*^9, 3.467406180125*^9}, {
+   3.467406423453125*^9, 3.4674064899375*^9}, {3.46740654203125*^9, 
+   3.46740660703125*^9}, {3.467406684328125*^9, 3.4674066994375*^9}, {
+   3.467472504546875*^9, 3.46747258878125*^9}, {3.46747262271875*^9, 
+   3.467472771234375*^9}, {3.46747282403125*^9, 3.467472841625*^9}, {
+   3.46747296684375*^9, 3.467472999953125*^9}, {3.467473037734375*^9, 
+   3.467473161421875*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"BestEver    = \"\>", "\[InvisibleSpace]", "1.4140625`10."}],
+  SequenceForm["BestEver    = ", 1.4140625`10.],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.46740606278125*^9, {3.46740609396875*^9, 3.467406180125*^9}, {
+   3.467406423453125*^9, 3.4674064899375*^9}, {3.46740654203125*^9, 
+   3.46740660703125*^9}, {3.467406684328125*^9, 3.4674066994375*^9}, {
+   3.467472504546875*^9, 3.46747258878125*^9}, {3.46747262271875*^9, 
+   3.467472771234375*^9}, {3.46747282403125*^9, 3.467472841625*^9}, {
+   3.46747296684375*^9, 3.467472999953125*^9}, {3.467473037734375*^9, 
+   3.467473161421875*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"BestEver^2  = \"\>", "\[InvisibleSpace]", 
+   "1.99957275390625`9.698970004336017"}],
+  SequenceForm["BestEver^2  = ", 1.99957275390625`9.698970004336017],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.46740606278125*^9, {3.46740609396875*^9, 3.467406180125*^9}, {
+   3.467406423453125*^9, 3.4674064899375*^9}, {3.46740654203125*^9, 
+   3.46740660703125*^9}, {3.467406684328125*^9, 3.4674066994375*^9}, {
+   3.467472504546875*^9, 3.46747258878125*^9}, {3.46747262271875*^9, 
+   3.467472771234375*^9}, {3.46747282403125*^9, 3.467472841625*^9}, {
+   3.46747296684375*^9, 3.467472999953125*^9}, {3.467473037734375*^9, 
+   3.467473161421875*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"BestFitness = \"\>", "\[InvisibleSpace]", 
+   "0.999786376953125`9.698970004336017"}],
+  SequenceForm["BestFitness = ", 0.999786376953125`9.698970004336017],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.46740606278125*^9, {3.46740609396875*^9, 3.467406180125*^9}, {
+   3.467406423453125*^9, 3.4674064899375*^9}, {3.46740654203125*^9, 
+   3.46740660703125*^9}, {3.467406684328125*^9, 3.4674066994375*^9}, {
+   3.467472504546875*^9, 3.46747258878125*^9}, {3.46747262271875*^9, 
+   3.467472771234375*^9}, {3.46747282403125*^9, 3.467472841625*^9}, {
+   3.46747296684375*^9, 3.467472999953125*^9}, {3.467473037734375*^9, 
+   3.467473161421875*^9}}]
+}, Open  ]],
+
+Cell[BoxData[
+ GraphicsBox[
+  {RGBColor[0.798413061722744, 0.824719615472648, 0.968322270542458], 
+   EdgeForm[Opacity[0.7]], {}, 
+   {RGBColor[0.798413061722744, 0.824719615472648, 0.968322270542458], 
+    EdgeForm[Opacity[0.7]], 
+    TagBox[
+     TooltipBox[
+      TagBox[
+       DynamicBox[{
+         FEPrivate`If[
+          CurrentValue["MouseOver"], 
+          EdgeForm[{
+            GrayLevel[0.5], 
+            AbsoluteThickness[1.5], 
+            Opacity[0.66]}], {}, {}], 
+         RectangleBox[{
+           Rational[1, 5], 0}, {
+           Rational[2, 5], 1}]},
+        ImageSizeCache->{{12.75, 97.96020408163265}, {78.71387949342649, 
+         100.54319943714054`}}],
+       StatusArea[#, 1]& ,
+       TagBoxNote->"1"],
+      StyleBox["1", {
+        GrayLevel[0]}, StripOnInput -> False]],
+     Annotation[#, 
+      Style[1, {
+        GrayLevel[0]}], "Tooltip"]& ], 
+    TagBox[
+     TooltipBox[
+      TagBox[
+       DynamicBox[{
+         FEPrivate`If[
+          CurrentValue["MouseOver"], 
+          EdgeForm[{
+            GrayLevel[0.5], 
+            AbsoluteThickness[1.5], 
+            Opacity[0.66]}], {}, {}], 
+         RectangleBox[{
+           Rational[2, 5], 0}, {
+           Rational[3, 5], 1}]},
+        ImageSizeCache->{{97.46020408163265, 182.67040816326528`}, {
+         78.71387949342649, 100.54319943714054`}}],
+       StatusArea[#, 1]& ,
+       TagBoxNote->"1"],
+      StyleBox["1", {
+        GrayLevel[0]}, StripOnInput -> False]],
+     Annotation[#, 
+      Style[1, {
+        GrayLevel[0]}], "Tooltip"]& ], 
+    TagBox[
+     TooltipBox[
+      TagBox[
+       DynamicBox[{
+         FEPrivate`If[
+          CurrentValue["MouseOver"], 
+          EdgeForm[{
+            GrayLevel[0.5], 
+            AbsoluteThickness[1.5], 
+            Opacity[0.66]}], {}, {}], 
+         RectangleBox[{
+           Rational[3, 5], 0}, {
+           Rational[4, 5], 9}]},
+        ImageSizeCache->{{182.17040816326528`, 
+         267.380612244898}, {-91.92068005628593, 100.54319943714054`}}],
+       StatusArea[#, 9]& ,
+       TagBoxNote->"9"],
+      StyleBox["9", {
+        GrayLevel[0]}, StripOnInput -> False]],
+     Annotation[#, 
+      Style[9, {
+        GrayLevel[0]}], "Tooltip"]& ], 
+    TagBox[
+     TooltipBox[
+      TagBox[
+       DynamicBox[{
+         FEPrivate`If[
+          CurrentValue["MouseOver"], 
+          EdgeForm[{
+            GrayLevel[0.5], 
+            AbsoluteThickness[1.5], 
+            Opacity[0.66]}], {}, {}], 
+         RectangleBox[{
+           Rational[4, 5], 0}, {1, 9}]},
+        ImageSizeCache->{{266.880612244898, 
+         352.0908163265306}, {-91.92068005628593, 100.54319943714054`}}],
+       StatusArea[#, 9]& ,
+       TagBoxNote->"9"],
+      StyleBox["9", {
+        GrayLevel[0]}, StripOnInput -> False]],
+     Annotation[#, 
+      Style[9, {
+        GrayLevel[0]}], "Tooltip"]& ]}, {}, {}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->{True, True},
+  AxesOrigin->NCache[{
+     Rational[1, 5], 0}, {0.2, 0}],
+  FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+  PlotRange->NCache[{{
+      Rational[1, 5], 1}, {All, All}}, {{0.2, 1}, {All, All}}],
+  PlotRangePadding->{{
+     Scaled[0.02], 
+     Scaled[0.02]}, {
+     Scaled[0.02], 
+     Scaled[0.1]}},
+  Ticks->{Automatic, Automatic}]], "Output",
+ CellChangeTimes->{{3.467472504625*^9, 3.46747258884375*^9}, {
+  3.4674726228125*^9, 3.4674727713125*^9}, {3.467472824109375*^9, 
+  3.4674728416875*^9}, {3.467472966921875*^9, 3.467473000046875*^9}, {
+  3.46747303784375*^9, 3.4674731614375*^9}}]
+}, Open  ]]
+},
+WindowSize->{616, 644},
+WindowMargins->{{Automatic, 108}, {Automatic, 48}},
+FrontEndVersion->"7.0 for Microsoft Windows (32-bit) (February 18, 2009)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[545, 20, 5321, 151, 492, "Input"],
+Cell[CellGroupData[{
+Cell[5891, 175, 532, 9, 92, "Input"],
+Cell[6426, 186, 875, 15, 30, "Output"],
+Cell[7304, 203, 776, 11, 30, "Output"],
+Cell[8083, 216, 796, 11, 30, "Output"],
+Cell[8882, 229, 798, 11, 30, "Output"]
+}, Open  ]],
+Cell[9695, 243, 1065, 29, 112, "Input"],
+Cell[CellGroupData[{
+Cell[10785, 276, 135, 2, 31, "Input"],
+Cell[10923, 280, 2015, 61, 245, "Output"]
+}, Open  ]],
+Cell[12953, 344, 430, 10, 72, "Input"],
+Cell[CellGroupData[{
+Cell[13408, 358, 727, 18, 72, "Input"],
+Cell[CellGroupData[{
+Cell[14160, 380, 558, 10, 23, "Print"],
+Cell[14721, 392, 603, 11, 23, "Print"],
+Cell[15327, 405, 608, 11, 23, "Print"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[15984, 422, 5701, 153, 712, "Input"],
+Cell[CellGroupData[{
+Cell[21710, 579, 701, 13, 23, "Print"],
+Cell[22414, 594, 499, 8, 23, "Print"],
+Cell[22916, 604, 628, 12, 23, "Print"],
+Cell[23547, 618, 654, 12, 23, "Print"],
+Cell[24204, 632, 702, 13, 23, "Print"],
+Cell[24909, 647, 704, 13, 23, "Print"],
+Cell[25616, 662, 499, 8, 23, "Print"],
+Cell[26118, 672, 653, 12, 23, "Print"],
+Cell[26774, 686, 699, 13, 23, "Print"],
+Cell[27476, 701, 701, 13, 23, "Print"]
+}, Open  ]],
+Cell[28192, 717, 3528, 109, 250, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

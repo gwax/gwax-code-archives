@@ -1,0 +1,426 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 7.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[     16504,        417]
+NotebookOptionsPosition[     15472,        380]
+NotebookOutlinePosition[     15818,        395]
+CellTagsIndexPosition[     15775,        392]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"fitkeys", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "age", ",", "female", ",", "asian", ",", "black", ",", "hispanic", ",", 
+     "bmi", ",", "bsa", ",", "sbp", ",", "dbp", ",", "tc", ",", "fpg", ",", 
+     "hdl", ",", "crp", ",", "tg", ",", "cursmoker", ",", "invheight", ",", 
+     "height", ",", "weight", ",", "logage"}], "}"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"createfitarray", "[", 
+    RowBox[{"basearray_", ",", "key_"}], "]"}], ":=", 
+   RowBox[{"Transpose", "[", 
+    RowBox[{"Join", "[", 
+     RowBox[{
+      RowBox[{"Map", "[", 
+       RowBox[{"basearray", ",", 
+        RowBox[{"Map", "[", 
+         RowBox[{"ToString", ",", "fitkeys"}], "]"}]}], "]"}], ",", 
+      RowBox[{"List", "[", 
+       RowBox[{"basearray", "[", "key", "]"}], "]"}]}], "]"}], "]"}]}], 
+  ";"}]}], "Input"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"fullfitarray", "=", 
+   RowBox[{"createfitarray", "[", 
+    RowBox[{"riskFactor", ",", "\"\<ITPYM\>\""}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"crosscutparts", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"400", "*", 
+         RowBox[{"(", 
+          RowBox[{"i", "-", "1"}], ")"}]}], "+", "1"}], ",", 
+       RowBox[{"400", "*", "i"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", "1", ",", "10"}], "}"}]}], "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.465584214698512*^9, 3.465584246508772*^9}, {
+   3.465584372749884*^9, 3.4655843741091633`*^9}, 3.4655851041622777`*^9, 
+   3.4655940090394*^9, 3.465594080768725*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"modelfitters", "=", "\[IndentingNewLine]", 
+   RowBox[{"{", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"LinearModelFit", "[", 
+       RowBox[{"#", ",", 
+        RowBox[{"{", 
+         RowBox[{
+         "age", ",", "asian", ",", "black", ",", "hispanic", ",", "bmi", ",", 
+          "bsa", ",", "sbp", ",", "dbp", ",", "tc", ",", "fpg", ",", "hdl", 
+          ",", "crp", ",", "tg", ",", "cursmoker"}], "}"}], ",", "fitkeys"}], 
+       "]"}], "&"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"LinearModelFit", "[", 
+       RowBox[{"#", ",", 
+        RowBox[{"{", 
+         RowBox[{
+         "age", ",", "dbp", ",", "sbp", ",", "invheight", ",", "weight"}], 
+         "}"}], ",", "fitkeys"}], "]"}], "&"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"NonlinearModelFit", "[", 
+       RowBox[{"#", ",", 
+        RowBox[{
+         FractionBox[
+          RowBox[{"a", "*", "sbp"}], 
+          RowBox[{
+           RowBox[{"b", "*", "dbp"}], "+", 
+           RowBox[{"c", "*", "weight"}]}]], "+", 
+         RowBox[{"d", "*", 
+          FractionBox["age", "height"]}], "+", 
+         RowBox[{"e", "*", 
+          FractionBox["sbp", "height"]}], "+", "f"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"a", ",", "b", ",", "c", ",", "d", ",", "e", ",", "f"}], 
+         "}"}], ",", "fitkeys"}], "]"}], "&"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"NonlinearModelFit", "[", 
+       RowBox[{"#", ",", 
+        RowBox[{
+         FractionBox[
+          RowBox[{"a", "*", "sbp"}], 
+          RowBox[{
+           RowBox[{"b", "*", "dbp"}], "+", 
+           RowBox[{"c", "*", "weight"}]}]], "+", "d"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"a", ",", "b", ",", "c", ",", "d"}], "}"}], ",", "fitkeys"}],
+        "]"}], "&"}]}], "\[IndentingNewLine]", "}"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.4655882006202164`*^9, 3.465588279458416*^9}, {
+  3.4655886944760714`*^9, 3.4655887143496723`*^9}, {3.465589070715207*^9, 
+  3.4655891015880337`*^9}, {3.465589155459241*^9, 3.4655891811605563`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"rmserrs", "=", 
+   RowBox[{"{", "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"errs", "=", 
+   RowBox[{"{", "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"For", "[", 
+   RowBox[{
+    RowBox[{"j", "=", "1"}], ",", 
+    RowBox[{"j", "\[LessEqual]", 
+     RowBox[{"Length", "[", "modelfitters", "]"}]}], ",", 
+    RowBox[{"j", "++"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"testmodelfitter", "=", 
+      RowBox[{"modelfitters", "[", 
+       RowBox[{"[", "j", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"testsqerr", "=", "0"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"testerr", "=", "0"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"For", "[", 
+      RowBox[{
+       RowBox[{"i", "=", "1"}], ",", 
+       RowBox[{"i", "\[LessEqual]", 
+        RowBox[{"Length", "[", "crosscutparts", "]"}]}], ",", 
+       RowBox[{"i", "++"}], ",", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"validatepart", "=", "i"}], ";", "\[IndentingNewLine]", 
+        RowBox[{"partcutparts", "=", 
+         RowBox[{"Join", "[", 
+          RowBox[{
+           RowBox[{"Take", "[", 
+            RowBox[{"crosscutparts", ",", 
+             RowBox[{"{", 
+              RowBox[{"1", ",", 
+               RowBox[{"validatepart", "-", "1"}]}], "}"}]}], "]"}], ",", 
+           RowBox[{"Take", "[", 
+            RowBox[{"crosscutparts", ",", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"validatepart", "+", "1"}], ",", "10"}], "}"}]}], 
+            "]"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"partcutarray", "=", 
+         RowBox[{"Flatten", "[", 
+          RowBox[{
+           RowBox[{"Map", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"Take", "[", 
+               RowBox[{"fullfitarray", ",", "#"}], "]"}], "&"}], ",", 
+             "partcutparts"}], "]"}], ",", "1"}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"parttestarray", "=", 
+         RowBox[{"Take", "[", 
+          RowBox[{"fullfitarray", ",", 
+           RowBox[{"crosscutparts", "[", 
+            RowBox[{"[", "validatepart", "]"}], "]"}]}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"testfitfunc", "=", 
+         RowBox[{"testmodelfitter", "[", "partcutarray", "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"testfitinput", "=", 
+         RowBox[{"Transpose", "[", 
+          RowBox[{"Most", "[", 
+           RowBox[{"Transpose", "[", "parttestarray", "]"}], "]"}], "]"}]}], 
+        ";", "\[IndentingNewLine]", 
+        RowBox[{"testfitrealout", "=", 
+         RowBox[{"Last", "[", 
+          RowBox[{"Transpose", "[", "parttestarray", "]"}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"testfitcalcout", "=", 
+         RowBox[{"Map", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"Apply", "[", 
+             RowBox[{"testfitfunc", ",", "#"}], "]"}], "&"}], ",", 
+           "testfitinput"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"testsqerr", "+=", 
+         RowBox[{"Total", "[", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"testfitcalcout", "-", "testfitrealout"}], ")"}], "^", 
+           "2"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"testerr", "+=", 
+         RowBox[{"Total", "[", 
+          RowBox[{"testfitcalcout", "-", "testfitrealout"}], "]"}]}], ";"}]}],
+       "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"rmserrs", "=", 
+      RowBox[{"Join", "[", 
+       RowBox[{"rmserrs", ",", 
+        RowBox[{"{", 
+         RowBox[{"Sqrt", "[", "testsqerr", "]"}], "}"}]}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"errs", "=", 
+      RowBox[{"Join", "[", 
+       RowBox[{"errs", ",", 
+        RowBox[{"{", "testerr", "}"}]}], "]"}]}], ";"}]}], 
+   "\[IndentingNewLine]", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"rmserrs", "/", "20"}], "\[IndentingNewLine]", 
+ RowBox[{"errs", "/", "4000"}]}], "Input",
+ CellChangeTimes->{{3.465584458275113*^9, 3.465584497944195*^9}, {
+   3.46558453934753*^9, 3.465584600327612*^9}, {3.4655848267804184`*^9, 
+   3.4655849431737814`*^9}, {3.4655849818466463`*^9, 3.465585019066349*^9}, {
+   3.465585054145372*^9, 3.465585057817341*^9}, {3.4655852736114283`*^9, 
+   3.465585578629094*^9}, {3.4655857060592537`*^9, 3.4655858064748497`*^9}, {
+   3.4655858494564743`*^9, 3.465585871205082*^9}, {3.4655860757541924`*^9, 
+   3.4655860939872837`*^9}, {3.46558634928181*^9, 3.4655863580155697`*^9}, {
+   3.465586390528906*^9, 3.4655864037935967`*^9}, {3.4655865582202244`*^9, 
+   3.4655868538712845`*^9}, {3.4655880023841734`*^9, 3.465588180090412*^9}, 
+   3.465588228227648*^9, {3.4655882845518074`*^9, 3.4655885010053177`*^9}, {
+   3.46559405114581*^9, 3.4655940901743126`*^9}, {3.4655941875112095`*^9, 
+   3.4655942088690805`*^9}, {3.465594252287899*^9, 3.4655943486873617`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"NonlinearModelFit", "::", "\<\"sszero\"\>"}], 
+  RowBox[{
+  ":", " "}], "\<\"\\!\\(\\*StyleBox[\\\"\\\\\\\"The step size in the search \
+has become less than the tolerance prescribed by the PrecisionGoal option, \
+but the gradient is larger than the tolerance specified by the AccuracyGoal \
+option. There is a possibility that the method has stalled at a point that is \
+not a local minimum.\\\\\\\"\\\", \\\"MT\\\"]\\) \\!\\(\\*ButtonBox[\\\"\
+\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/NonlinearModelFit\\\", ButtonNote -> \
+\\\"NonlinearModelFit::sszero\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{
+  3.4655885092234893`*^9, 3.4655887251770353`*^9, 3.4655890825268755`*^9, 
+   3.4655891146339903`*^9, 3.4655891689582906`*^9, 3.4655940196324043`*^9, 
+   3.46559406841022*^9, {3.465594196666815*^9, 3.4655942188527527`*^9}, 
+   3.4655943592178707`*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"NonlinearModelFit", "::", "\<\"sszero\"\>"}], 
+  RowBox[{
+  ":", " "}], "\<\"\\!\\(\\*StyleBox[\\\"\\\\\\\"The step size in the search \
+has become less than the tolerance prescribed by the PrecisionGoal option, \
+but the gradient is larger than the tolerance specified by the AccuracyGoal \
+option. There is a possibility that the method has stalled at a point that is \
+not a local minimum.\\\\\\\"\\\", \\\"MT\\\"]\\) \\!\\(\\*ButtonBox[\\\"\
+\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/NonlinearModelFit\\\", ButtonNote -> \
+\\\"NonlinearModelFit::sszero\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{
+  3.4655885092234893`*^9, 3.4655887251770353`*^9, 3.4655890825268755`*^9, 
+   3.4655891146339903`*^9, 3.4655891689582906`*^9, 3.4655940196324043`*^9, 
+   3.46559406841022*^9, {3.465594196666815*^9, 3.4655942188527527`*^9}, 
+   3.4655943597490835`*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "2.2598376270933556`", ",", "2.2840048389045364`", ",", 
+   "2.288104555567497`", ",", "2.4130995152923287`"}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.4655884735385017`*^9, 3.465588509848445*^9, 3.4655887257863674`*^9, 
+   3.465589083136208*^9, 3.4655891152433224`*^9, 3.465589169551999*^9, 
+   3.4655940230384145`*^9, 3.4655940717224865`*^9, {3.4655941999947057`*^9, 
+   3.465594219493333*^9}, 3.465594359842827*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"-", "0.00014148648345906612`"}], ",", "0.00008337510108810519`", 
+   ",", "0.0001426874412362178`", ",", "0.00008965746848883605`"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{
+  3.4655884735385017`*^9, 3.465588509848445*^9, 3.4655887257863674`*^9, 
+   3.465589083136208*^9, 3.4655891152433224`*^9, 3.465589169551999*^9, 
+   3.4655940230384145`*^9, 3.4655940717224865`*^9, {3.4655941999947057`*^9, 
+   3.465594219493333*^9}, 3.465594359967818*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["testrmserr"], "Input",
+ CellChangeTimes->{{3.465586888775077*^9, 3.4655868906811924`*^9}}],
+
+Cell[BoxData["45.76209111134994`"], "Output",
+ CellChangeTimes->{
+  3.465586891087414*^9, 3.4655881301095552`*^9, {3.465588187355525*^9, 
+   3.4655881898084774`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"parttestarray", "[", 
+  RowBox[{"[", "1", "]"}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"testfitinput", "[", 
+  RowBox[{"[", "1", "]"}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"testfitrealout", "[", 
+  RowBox[{"[", "1", "]"}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"testfitcalcout", "[", 
+  RowBox[{"[", "1", "]"}], "]"}]}], "Input",
+ CellChangeTimes->{{3.465585808677834*^9, 3.465585838222818*^9}, {
+  3.465585875095458*^9, 3.46558587990765*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "54", ",", "0", ",", "0", ",", "0", ",", "1", ",", "26.560095862`", ",", 
+   "1.7562796733`", ",", "109", ",", "74", ",", "211", ",", "85", ",", "37", 
+   ",", "2.87`", ",", "188", ",", "0", ",", "0.0061462814996926865`", ",", 
+   "162.7`", ",", "70.45454545454545`", ",", "3.9889840465642745`", ",", 
+   "2.8079434808230537`"}], "}"}]], "Output",
+ CellChangeTimes->{{3.4655858119432497`*^9, 3.465585838863402*^9}, 
+   3.465585880235754*^9, 3.465585972589218*^9, 3.4655860986432056`*^9, 
+   3.465586515160756*^9, {3.4655865772813826`*^9, 3.4655866641971383`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "54", ",", "0", ",", "0", ",", "0", ",", "1", ",", "26.560095862`", ",", 
+   "1.7562796733`", ",", "109", ",", "74", ",", "211", ",", "85", ",", "37", 
+   ",", "2.87`", ",", "188", ",", "0", ",", "0.0061462814996926865`", ",", 
+   "162.7`", ",", "70.45454545454545`", ",", "3.9889840465642745`"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{{3.4655858119432497`*^9, 3.465585838863402*^9}, 
+   3.465585880235754*^9, 3.465585972589218*^9, 3.4655860986432056`*^9, 
+   3.465586515160756*^9, {3.4655865772813826`*^9, 3.4655866641971383`*^9}}],
+
+Cell[BoxData["2.8079434808230537`"], "Output",
+ CellChangeTimes->{{3.4655858119432497`*^9, 3.465585838863402*^9}, 
+   3.465585880235754*^9, 3.465585972589218*^9, 3.4655860986432056`*^9, 
+   3.465586515160756*^9, {3.4655865772813826`*^9, 3.4655866641971383`*^9}}],
+
+Cell[BoxData["2.45934388925221`"], "Output",
+ CellChangeTimes->{{3.4655858119432497`*^9, 3.465585838863402*^9}, 
+   3.465585880235754*^9, 3.465585972589218*^9, 3.4655860986432056`*^9, 
+   3.465586515160756*^9, {3.4655865772813826`*^9, 3.4655866641971383`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Map", "[", 
+  RowBox[{"ToExpression", ",", 
+   RowBox[{"Map", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"#", "<>", "\"\<_\>\""}], "&"}], ",", 
+     RowBox[{"Map", "[", 
+      RowBox[{"ToString", ",", "fitkeys"}], "]"}]}], "]"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.465586201151614*^9, 3.465586274083979*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "age_", ",", "female_", ",", "asian_", ",", "black_", ",", "hispanic_", ",",
+    "bmi_", ",", "bsa_", ",", "sbp_", ",", "dbp_", ",", "tc_", ",", "fpg_", 
+   ",", "hdl_", ",", "crp_", ",", "tg_", ",", "cursmoker_", ",", "invheight_",
+    ",", "height_", ",", "weight_", ",", "logage_"}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.4655862291652665`*^9, {3.465586266256405*^9, 3.4655862747089353`*^9}}]
+}, Open  ]]
+},
+WindowSize->{616, 644},
+WindowMargins->{{Automatic, 107}, {15, Automatic}},
+FrontEndVersion->"7.0 for Microsoft Windows (32-bit) (February 18, 2009)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[545, 20, 863, 23, 112, "Input"],
+Cell[1411, 45, 764, 21, 52, "Input"],
+Cell[2178, 68, 2091, 51, 248, "Input"],
+Cell[CellGroupData[{
+Cell[4294, 123, 4924, 111, 512, "Input"],
+Cell[9221, 236, 953, 16, 90, "Message"],
+Cell[10177, 254, 953, 16, 90, "Message"],
+Cell[11133, 272, 462, 9, 30, "Output"],
+Cell[11598, 283, 497, 10, 30, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[12132, 298, 104, 1, 31, "Input"],
+Cell[12239, 301, 166, 3, 30, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[12442, 309, 476, 10, 92, "Input"],
+Cell[12921, 321, 605, 10, 50, "Output"],
+Cell[13529, 333, 576, 10, 50, "Output"],
+Cell[14108, 345, 262, 3, 30, "Output"],
+Cell[14373, 350, 260, 3, 30, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[14670, 358, 342, 9, 31, "Input"],
+Cell[15015, 369, 441, 8, 69, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

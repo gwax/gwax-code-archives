@@ -1,0 +1,266 @@
+(***********************************************************************
+
+                    Mathematica-Compatible Notebook
+
+This notebook can be used on any computer system with Mathematica 4.0,
+MathReader 4.0, or any compatible application. The data for the notebook 
+starts with the line containing stars above.
+
+To get the notebook into a Mathematica-compatible application, do one of 
+the following:
+
+* Save the data starting with the line of stars above into a file
+  with a name ending in .nb, then open the file inside the application;
+
+* Copy the data starting with the line of stars above to the
+  clipboard, then use the Paste menu command inside the application.
+
+Data for notebooks contains only printable 7-bit ASCII and can be
+sent directly in email or through ftp in text mode.  Newlines can be
+CR, LF or CRLF (Unix, Macintosh or MS-DOS style).
+
+NOTE: If you modify the data for this notebook not in a Mathematica-
+compatible application, you must delete the line below containing the 
+word CacheID, otherwise Mathematica-compatible applications may try to 
+use invalid cache data.
+
+For more information on notebooks and Mathematica-compatible 
+applications, contact Wolfram Research:
+  web: http://www.wolfram.com
+  email: info@wolfram.com
+  phone: +1-217-398-0700 (U.S.)
+
+Notebook reader applications are available free of charge from 
+Wolfram Research.
+***********************************************************************)
+
+(*CacheID: 232*)
+
+
+(*NotebookFileLineBreakTest
+NotebookFileLineBreakTest*)
+(*NotebookOptionsPosition[      7492,        222]*)
+(*NotebookOutlinePosition[      8146,        245]*)
+(*  CellTagsIndexPosition[      8102,        241]*)
+(*WindowFrame->Normal*)
+
+
+
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[{
+    RowBox[{\( (*The\ output\ will\ rotate\ the\ vector\ r\ by\ the\ \
+rotational\ vector\ v*) \), 
+      "\[IndentingNewLine]", \(r = {x, y, 
+          z}\)}], "\[IndentingNewLine]", \(v = {a, b, 
+        c}\), "\[IndentingNewLine]", \(vv = \@\(v . v\)\), "\
+\[IndentingNewLine]", 
+    RowBox[{"MatrixForm", "[", 
+      RowBox[{"vm", "=", 
+        RowBox[{"Simplify", "[", 
+          RowBox[{"(", 
+            FractionBox[
+              RowBox[{
+                RowBox[{
+                  RowBox[{"(", GridBox[{
+                        {"1", "0", "0"},
+                        {"0", \(Cos[vv]\), \(Sin[vv]\)},
+                        {"0", \(-Sin[vv]\), \(Cos[vv]\)}
+                        }], ")"}], "*", \(v[\([1]\)]\)}], "+", 
+                RowBox[{
+                  RowBox[{"(", GridBox[{
+                        {\(Cos[vv]\), "0", \(Sin[vv]\)},
+                        {"0", "1", "0"},
+                        {\(-Sin[vv]\), "0", \(Cos[vv]\)}
+                        }], ")"}], "*", \(v[\([2]\)]\)}], "+", 
+                RowBox[{
+                  RowBox[{"(", GridBox[{
+                        {\(Cos[vv]\), \(Sin[vv]\), "0"},
+                        {\(-Sin[vv]\), \(Cos[vv]\), "0"},
+                        {"0", "0", "1"}
+                        }], ")"}], "*", \(v[\([3]\)]\)}]}], "vv"], ")"}], 
+          "]"}]}], "]"}], "\[IndentingNewLine]", \(MatrixForm[
+      Simplify[vm . r]]\)}], "Input"],
+
+Cell[BoxData[
+    \({x, y, z}\)], "Output"],
+
+Cell[BoxData[
+    \({a, b, c}\)], "Output"],
+
+Cell[BoxData[
+    \(\@\(a\^2 + b\^2 + c\^2\)\)], "Output"],
+
+Cell[BoxData[
+    TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {\(\(a + \((b + 
+                          c)\)\ Cos[\@\(a\^2 + b\^2 + c\^2\)]\)\/\@\(a\^2 + b\
+\^2 + c\^2\)\), \(\(c\ Sin[\@\(a\^2 + b\^2 + c\^2\)]\)\/\@\(a\^2 + b\^2 + \
+c\^2\)\), \(\(b\ Sin[\@\(a\^2 + b\^2 + c\^2\)]\)\/\@\(a\^2 + b\^2 + \
+c\^2\)\)},
+            {\(-\(\(c\ Sin[\@\(a\^2 + b\^2 + c\^2\)]\)\/\@\(a\^2 + b\^2 + \
+c\^2\)\)\), \(\(b + \((a + 
+                          c)\)\ Cos[\@\(a\^2 + b\^2 + c\^2\)]\)\/\@\(a\^2 + b\
+\^2 + c\^2\)\), \(\(a\ Sin[\@\(a\^2 + b\^2 + c\^2\)]\)\/\@\(a\^2 + b\^2 + \
+c\^2\)\)},
+            {\(-\(\(b\ Sin[\@\(a\^2 + b\^2 + c\^2\)]\)\/\@\(a\^2 + b\^2 + \
+c\^2\)\)\), \(-\(\(a\ Sin[\@\(a\^2 + b\^2 + c\^2\)]\)\/\@\(a\^2 + b\^2 + c\^2\
+\)\)\), \(\(c + \((a + 
+                          b)\)\ Cos[\@\(a\^2 + b\^2 + c\^2\)]\)\/\@\(a\^2 + b\
+\^2 + c\^2\)\)}
+            }], "\[NoBreak]", ")"}],
+      (MatrixForm[ #]&)]], "Output",
+  FontSize->14],
+
+Cell[BoxData[
+    InterpretationBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+            {\(\(a\ x + \((b + 
+                          c)\)\ x\ Cos[\@\(a\^2 + b\^2 + c\^2\)] + \((c\ y + 
+                          b\ z)\)\ Sin[\@\(a\^2 + b\^2 + c\^2\)]\)\/\@\(a\^2 \
++ b\^2 + c\^2\)\)},
+            {\(\(b\ y + \((a + 
+                          c)\)\ y\ Cos[\@\(a\^2 + b\^2 + c\^2\)] + \((\(-c\)\ \
+x + a\ z)\)\ Sin[\@\(a\^2 + b\^2 + c\^2\)]\)\/\@\(a\^2 + b\^2 + c\^2\)\)},
+            {\(\(c\ z + \((a + 
+                          b)\)\ z\ Cos[\@\(a\^2 + b\^2 + c\^2\)] - \((b\ x + 
+                          a\ y)\)\ Sin[\@\(a\^2 + b\^2 + c\^2\)]\)\/\@\(a\^2 \
++ b\^2 + c\^2\)\)}
+            }], "\[NoBreak]", ")"}],
+      MatrixForm[ {
+        Times[ 
+          Power[ 
+            Plus[ 
+              Power[ a, 2], 
+              Power[ b, 2], 
+              Power[ c, 2]], 
+            Rational[ -1, 2]], 
+          Plus[ 
+            Times[ a, x], 
+            Times[ 
+              Plus[ b, c], x, 
+              Cos[ 
+                Power[ 
+                  Plus[ 
+                    Power[ a, 2], 
+                    Power[ b, 2], 
+                    Power[ c, 2]], 
+                  Rational[ 1, 2]]]], 
+            Times[ 
+              Plus[ 
+                Times[ c, y], 
+                Times[ b, z]], 
+              Sin[ 
+                Power[ 
+                  Plus[ 
+                    Power[ a, 2], 
+                    Power[ b, 2], 
+                    Power[ c, 2]], 
+                  Rational[ 1, 2]]]]]], 
+        Times[ 
+          Power[ 
+            Plus[ 
+              Power[ a, 2], 
+              Power[ b, 2], 
+              Power[ c, 2]], 
+            Rational[ -1, 2]], 
+          Plus[ 
+            Times[ b, y], 
+            Times[ 
+              Plus[ a, c], y, 
+              Cos[ 
+                Power[ 
+                  Plus[ 
+                    Power[ a, 2], 
+                    Power[ b, 2], 
+                    Power[ c, 2]], 
+                  Rational[ 1, 2]]]], 
+            Times[ 
+              Plus[ 
+                Times[ -1, c, x], 
+                Times[ a, z]], 
+              Sin[ 
+                Power[ 
+                  Plus[ 
+                    Power[ a, 2], 
+                    Power[ b, 2], 
+                    Power[ c, 2]], 
+                  Rational[ 1, 2]]]]]], 
+        Times[ 
+          Power[ 
+            Plus[ 
+              Power[ a, 2], 
+              Power[ b, 2], 
+              Power[ c, 2]], 
+            Rational[ -1, 2]], 
+          Plus[ 
+            Times[ c, z], 
+            Times[ 
+              Plus[ a, b], z, 
+              Cos[ 
+                Power[ 
+                  Plus[ 
+                    Power[ a, 2], 
+                    Power[ b, 2], 
+                    Power[ c, 2]], 
+                  Rational[ 1, 2]]]], 
+            Times[ -1, 
+              Plus[ 
+                Times[ b, x], 
+                Times[ a, y]], 
+              Sin[ 
+                Power[ 
+                  Plus[ 
+                    Power[ a, 2], 
+                    Power[ b, 2], 
+                    Power[ c, 2]], 
+                  Rational[ 1, 2]]]]]]}]]], "Output",
+  FontSize->18]
+}, Open  ]]
+},
+FrontEndVersion->"4.0 for Microsoft Windows",
+ScreenRectangle->{{0, 1024}, {0, 695}},
+WindowSize->{1016, 668},
+WindowMargins->{{0, Automatic}, {Automatic, 0}}
+]
+
+
+(***********************************************************************
+Cached data follows.  If you edit this Notebook file directly, not using
+Mathematica, you must remove the line containing CacheID at the top of 
+the file.  The cache data will then be recreated when you save this file 
+from within Mathematica.
+***********************************************************************)
+
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+
+(*NotebookFileOutline
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[1739, 51, 1428, 32, 223, "Input"],
+Cell[3170, 85, 43, 1, 29, "Output"],
+Cell[3216, 88, 43, 1, 29, "Output"],
+Cell[3262, 91, 58, 1, 35, "Output"],
+Cell[3323, 94, 967, 20, 147, "Output"],
+Cell[4293, 116, 3183, 103, 141, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+
+
+
+(***********************************************************************
+End of Mathematica Notebook file.
+***********************************************************************)
+

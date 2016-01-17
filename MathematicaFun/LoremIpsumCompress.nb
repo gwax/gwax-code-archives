@@ -1,0 +1,403 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 7.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[     18478,        394]
+NotebookOptionsPosition[     17425,        360]
+NotebookOutlinePosition[     17771,        375]
+CellTagsIndexPosition[     17728,        372]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"lorem", "=", 
+   RowBox[{"ExampleData", "[", 
+    RowBox[{"{", 
+     RowBox[{"\"\<Text\>\"", ",", "\"\<LoremIpsum\>\""}], "}"}], "]"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.475527952515625*^9, 3.47552796884375*^9}, {
+  3.47552802959375*^9, 3.475528033125*^9}, {3.475531272875*^9, 
+  3.4755312908125*^9}, {3.475531370984375*^9, 3.475531375390625*^9}, {
+  3.475532046984375*^9, 3.475532054453125*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ucLorem", "=", 
+   RowBox[{"ToUpperCase", "[", "lorem", "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.475532055953125*^9, 3.475532065484375*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"rleUcLorem", "=", 
+   RowBox[{"StringJoin", "[", 
+    RowBox[{"RunLengthEncoding", "[", 
+     RowBox[{
+      RowBox[{"Characters", "[", "ucLorem", "]"}], ",", "4", ",", 
+      "\"\<\\\\\>\""}], "]"}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.4755320723125*^9, 3.475532076953125*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"bwtRleUcLorem", "=", 
+   RowBox[{"BurrowsWheelerTransform", "[", 
+    RowBox[{"rleUcLorem", ",", "\"\<$\>\""}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.475528040328125*^9, 3.475528067984375*^9}, {
+  3.47553137975*^9, 3.47553138459375*^9}, {3.4755320818125*^9, 
+  3.47553208575*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"mtfBwtRleUcLorem", "=", 
+   RowBox[{"MoveToFront", "[", "bwtRleUcLorem", "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"s1MtfBwtRleUcLorem", "=", 
+   RowBox[{"StringJoin", "[", 
+    RowBox[{"FromCharacterCode", "[", 
+     RowBox[{"64", "+", 
+      RowBox[{"mtfBwtRleUcLorem", "[", 
+       RowBox[{"[", "1", "]"}], "]"}]}], "]"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"s2MtfBwtRleUcLorem", "=", 
+   RowBox[{"StringJoin", "[", 
+    RowBox[{"mtfBwtRleUcLorem", "[", 
+     RowBox[{"[", "2", "]"}], "]"}], "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.475528078671875*^9, 3.47552811209375*^9}, {
+  3.475531397515625*^9, 3.475531400859375*^9}, {3.475532089671875*^9, 
+  3.475532092875*^9}, {3.4755321700625*^9, 3.475532251828125*^9}, {
+  3.47553228303125*^9, 3.475532299578125*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"rleS1MtfBwtRleUcLorem", "=", 
+   RowBox[{"StringJoin", "[", 
+    RowBox[{"Map", "[", 
+     RowBox[{"ToString", ",", 
+      RowBox[{"RunLengthEncoding", "[", 
+       RowBox[{
+        RowBox[{"Characters", "[", "s1MtfBwtRleUcLorem", "]"}], ",", "2", 
+        ",", "\"\<\\\\\>\""}], "]"}]}], "]"}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.475532261828125*^9, 3.4755322644375*^9}, {
+  3.475532314203125*^9, 3.475532416421875*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"dec1", "=", 
+   RowBox[{"InverseRunLengthEncoding", "[", 
+    RowBox[{
+     RowBox[{"Characters", "[", "rleS1MtfBwtRleUcLorem", "]"}], ",", 
+     "\"\<\\\\\>\""}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.47553253434375*^9, 3.475532545140625*^9}, {
+  3.475532582875*^9, 3.4755326344375*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"dec2", "=", 
+   RowBox[{"InverseMoveToFront", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"ToCharacterCode", "[", "dec1", "]"}], "-", "64"}], ",", 
+     RowBox[{"Characters", "[", "s2MtfBwtRleUcLorem", "]"}]}], "]"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.475532636921875*^9, 3.475532638015625*^9}, {
+  3.47553268578125*^9, 3.475532735859375*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Part", "::", "\<\"span\"\>"}], 
+  RowBox[{
+  ":", " "}], "\<\"\[NoBreak]\\!\\(\\*StyleBox[\\!\\(1 ;; \\(\\({0}\\)\\)\\), \
+\\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\\"\\\\\\\" is not a valid Span \
+specification. A Span specification should be 1, 2, or 3 integers separated \
+by ;;. (Any of the integers can be omitted, or replaced with \
+All.)\\\\\\\"\\\", \\\"MT\\\"]\\) \
+\\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
+ButtonFrame->None, ButtonData:>\\\"paclet:ref/Part\\\", ButtonNote -> \
+\\\"Part::span\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.4755327190625*^9, 3.475532992359375*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Part", "::", "\<\"span\"\>"}], 
+  RowBox[{
+  ":", " "}], "\<\"\[NoBreak]\\!\\(\\*StyleBox[\\!\\(\\(\\({2}\\)\\) ;; \
+All\\), \\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\\"\\\\\\\" is not a valid \
+Span specification. A Span specification should be 1, 2, or 3 integers \
+separated by ;;. (Any of the integers can be omitted, or replaced with \
+All.)\\\\\\\"\\\", \\\"MT\\\"]\\) \
+\\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
+ButtonFrame->None, ButtonData:>\\\"paclet:ref/Part\\\", ButtonNote -> \
+\\\"Part::span\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.4755327190625*^9, 3.475532992359375*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Join", "::", "\<\"heads\"\>"}], 
+  RowBox[{
+  ":", " "}], "\<\"\\!\\(\\*StyleBox[\\\"\\\\\\\"Heads \\\\\\\"\\\", \\\"MT\\\
+\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\!\\(List\\), \
+\\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\\"\\\\\\\" and \\\\\\\"\\\", \
+\\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\!\\(Part\\), \\\"MT\\\"]\\)\
+\[NoBreak]\\!\\(\\*StyleBox[\\\"\\\\\\\" at positions \\\\\\\"\\\", \
+\\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\!\\(1\\), \
+\\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\\"\\\\\\\" and \\\\\\\"\\\", \
+\\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\!\\(2\\), \
+\\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\\"\\\\\\\" are expected to be the \
+same.\\\\\\\"\\\", \\\"MT\\\"]\\) \
+\\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
+ButtonFrame->None, ButtonData:>\\\"paclet:ref/message/General/heads\\\", \
+ButtonNote -> \\\"Join::heads\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.4755327190625*^9, 3.475532992625*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Part", "::", "\<\"span\"\>"}], 
+  RowBox[{
+  ":", " "}], "\<\"\[NoBreak]\\!\\(\\*StyleBox[\\!\\(1 ;; \\(\\({1}\\)\\)\\), \
+\\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\\"\\\\\\\" is not a valid Span \
+specification. A Span specification should be 1, 2, or 3 integers separated \
+by ;;. (Any of the integers can be omitted, or replaced with \
+All.)\\\\\\\"\\\", \\\"MT\\\"]\\) \
+\\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
+ButtonFrame->None, ButtonData:>\\\"paclet:ref/Part\\\", ButtonNote -> \
+\\\"Part::span\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.4755327190625*^9, 3.475532992625*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"General", "::", "\<\"stop\"\>"}], 
+  RowBox[{
+  ":", " "}], "\<\"\\!\\(\\*StyleBox[\\\"\\\\\\\"Further output of \\\\\\\"\\\
+\", \\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\!\\(Part :: \\\"span\\\"\\), \
+\\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\\"\\\\\\\" will be suppressed \
+during this calculation.\\\\\\\"\\\", \\\"MT\\\"]\\) \\!\\(\\*ButtonBox[\\\"\
+\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/stop\\\", ButtonNote -> \
+\\\"General::stop\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.4755327190625*^9, 3.475532992640625*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Join", "::", "\<\"heads\"\>"}], 
+  RowBox[{
+  ":", " "}], "\<\"\\!\\(\\*StyleBox[\\\"\\\\\\\"Heads \\\\\\\"\\\", \\\"MT\\\
+\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\!\\(List\\), \
+\\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\\"\\\\\\\" and \\\\\\\"\\\", \
+\\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\!\\(Part\\), \\\"MT\\\"]\\)\
+\[NoBreak]\\!\\(\\*StyleBox[\\\"\\\\\\\" at positions \\\\\\\"\\\", \
+\\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\!\\(1\\), \
+\\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\\"\\\\\\\" and \\\\\\\"\\\", \
+\\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\!\\(2\\), \
+\\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\\"\\\\\\\" are expected to be the \
+same.\\\\\\\"\\\", \\\"MT\\\"]\\) \
+\\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
+ButtonFrame->None, ButtonData:>\\\"paclet:ref/message/General/heads\\\", \
+ButtonNote -> \\\"Join::heads\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.4755327190625*^9, 3.475532992640625*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Join", "::", "\<\"heads\"\>"}], 
+  RowBox[{
+  ":", " "}], "\<\"\\!\\(\\*StyleBox[\\\"\\\\\\\"Heads \\\\\\\"\\\", \\\"MT\\\
+\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\!\\(List\\), \
+\\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\\"\\\\\\\" and \\\\\\\"\\\", \
+\\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\!\\(Part\\), \\\"MT\\\"]\\)\
+\[NoBreak]\\!\\(\\*StyleBox[\\\"\\\\\\\" at positions \\\\\\\"\\\", \
+\\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\!\\(1\\), \
+\\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\\"\\\\\\\" and \\\\\\\"\\\", \
+\\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\!\\(2\\), \
+\\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\\"\\\\\\\" are expected to be the \
+same.\\\\\\\"\\\", \\\"MT\\\"]\\) \
+\\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
+ButtonFrame->None, ButtonData:>\\\"paclet:ref/message/General/heads\\\", \
+ButtonNote -> \\\"Join::heads\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.4755327190625*^9, 3.475532992640625*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"General", "::", "\<\"stop\"\>"}], 
+  RowBox[{
+  ":", " "}], "\<\"\\!\\(\\*StyleBox[\\\"\\\\\\\"Further output of \\\\\\\"\\\
+\", \\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\!\\(Join :: \\\"heads\\\"\\), \
+\\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\\"\\\\\\\" will be suppressed \
+during this calculation.\\\\\\\"\\\", \\\"MT\\\"]\\) \\!\\(\\*ButtonBox[\\\"\
+\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/stop\\\", ButtonNote -> \
+\\\"General::stop\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.4755327190625*^9, 3.475532992640625*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Part", "::", "\<\"partw\"\>"}], 
+  RowBox[{
+  ":", " "}], "\<\"\\!\\(\\*StyleBox[\\\"\\\\\\\"Part \\\\\\\"\\\", \
+\\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\!\\({4}\\), \\\"MT\\\"]\\)\
+\[NoBreak]\\!\\(\\*StyleBox[\\\"\\\\\\\" of \\\\\\\"\\\", \\\"MT\\\"]\\)\
+\[NoBreak]\\!\\(\\*StyleBox[\\!\\(Join[\\(\\(\\(\\({\\(\\(\\(Join[\\(\\(\\(\\(\
+{\\({\\\"E\\\"}\\)}\\)\\), \\(\\(\\(\\({\\\"E\\\", \\\"S\\\", \\\"T\\\", \
+\\\"O\\\", \\\"A\\\", \\\"R\\\", \\\"H\\\", \\\"M\\\", \\\"L\\\", \\\"Y\\\", \
+\\\"I\\\", \\\"U\\\", \\\"N\\\", \\\"D\\\", \\\"C\\\", \\\"G\\\", \\\",\\\", \
+\\\".\\\", \\\" \\\", \\\"F\\\", \\\"V\\\", \\\"P\\\", \\\"B\\\", \\\"$\\\", \
+\\\"Q\\\", \\\"J\\\"}\\)\\) \[LeftDoubleBracket] \\(\\(1 ;; \
+\\(\\({0}\\)\\)\\)\\) \[RightDoubleBracket]\\)\\), \\(\\(\\(\\({\\\"E\\\", \\\
+\"S\\\", \\\"T\\\", \\\"O\\\", \\\"A\\\", \\\"R\\\", \\\"H\\\", \\\"M\\\", \\\
+\"L\\\", \\\"Y\\\", \\\"I\\\", \\\"U\\\", \\\"N\\\", \\\"D\\\", \\\"C\\\", \\\
+\"G\\\", \\\",\\\", \\\".\\\", \\\" \\\", \\\"F\\\", \\\"V\\\", \\\"P\\\", \\\
+\"B\\\", \\\"$\\\", \\\"Q\\\", \\\"J\\\"}\\)\\) \[LeftDoubleBracket] \
+\\(\\(\\(\\({2}\\)\\) ;; All\\)\\) \[RightDoubleBracket]\\)\\)\\)\\)]\\)\\) \
+\[LeftDoubleBracket] \\(\\(\\(\\({3}\\)\\) ;; All\\)\\) \[RightDoubleBracket]\
+\\)}\\)\\), \\(\\(\[LeftSkeleton] 1 \[RightSkeleton]\\)\\), \\(\\(\
+\[LeftSkeleton] 1 \[RightSkeleton]\\)\\)\\)\\)]\\), \
+\\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\\"\\\\\\\" does not \
+exist.\\\\\\\"\\\", \\\"MT\\\"]\\) \
+\\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
+ButtonFrame->None, ButtonData:>\\\"paclet:ref/message/General/partw\\\", \
+ButtonNote -> \\\"Part::partw\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.4755327190625*^9, 3.475532992640625*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Part", "::", "\<\"partw\"\>"}], 
+  RowBox[{
+  ":", " "}], "\<\"\\!\\(\\*StyleBox[\\\"\\\\\\\"Part \\\\\\\"\\\", \
+\\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\!\\({4}\\), \\\"MT\\\"]\\)\
+\[NoBreak]\\!\\(\\*StyleBox[\\\"\\\\\\\" of \\\\\\\"\\\", \\\"MT\\\"]\\)\
+\[NoBreak]\\!\\(\\*StyleBox[\\!\\(Join[\\(\\(\\(\\({\\(\\(\\(Join[\\(\\(\\(\\(\
+{\\({\\\"E\\\"}\\)}\\)\\), \\(\\(\\(\\({\\\"E\\\", \\\"S\\\", \\\"T\\\", \
+\\\"O\\\", \\\"A\\\", \\\"R\\\", \\\"H\\\", \\\"M\\\", \\\"L\\\", \\\"Y\\\", \
+\\\"I\\\", \\\"U\\\", \\\"N\\\", \\\"D\\\", \\\"C\\\", \\\"G\\\", \\\",\\\", \
+\\\".\\\", \\\" \\\", \\\"F\\\", \\\"V\\\", \\\"P\\\", \\\"B\\\", \\\"$\\\", \
+\\\"Q\\\", \\\"J\\\"}\\)\\) \[LeftDoubleBracket] \\(\\(1 ;; \
+\\(\\({0}\\)\\)\\)\\) \[RightDoubleBracket]\\)\\), \\(\\(\\(\\({\\\"E\\\", \\\
+\"S\\\", \\\"T\\\", \\\"O\\\", \\\"A\\\", \\\"R\\\", \\\"H\\\", \\\"M\\\", \\\
+\"L\\\", \\\"Y\\\", \\\"I\\\", \\\"U\\\", \\\"N\\\", \\\"D\\\", \\\"C\\\", \\\
+\"G\\\", \\\",\\\", \\\".\\\", \\\" \\\", \\\"F\\\", \\\"V\\\", \\\"P\\\", \\\
+\"B\\\", \\\"$\\\", \\\"Q\\\", \\\"J\\\"}\\)\\) \[LeftDoubleBracket] \
+\\(\\(\\(\\({2}\\)\\) ;; All\\)\\) \[RightDoubleBracket]\\)\\)\\)\\)]\\)\\) \
+\[LeftDoubleBracket] \\(\\(\\(\\({3}\\)\\) ;; All\\)\\) \[RightDoubleBracket]\
+\\)}\\)\\), \\(\\(\[LeftSkeleton] 1 \[RightSkeleton]\\)\\), \\(\\(\
+\[LeftSkeleton] 1 \[RightSkeleton]\\)\\)\\)\\)]\\), \
+\\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\\"\\\\\\\" does not \
+exist.\\\\\\\"\\\", \\\"MT\\\"]\\) \
+\\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
+ButtonFrame->None, ButtonData:>\\\"paclet:ref/message/General/partw\\\", \
+ButtonNote -> \\\"Part::partw\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.4755327190625*^9, 3.475532992640625*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Part", "::", "\<\"partw\"\>"}], 
+  RowBox[{
+  ":", " "}], "\<\"\\!\\(\\*StyleBox[\\\"\\\\\\\"Part \\\\\\\"\\\", \
+\\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\!\\({4}\\), \\\"MT\\\"]\\)\
+\[NoBreak]\\!\\(\\*StyleBox[\\\"\\\\\\\" of \\\\\\\"\\\", \\\"MT\\\"]\\)\
+\[NoBreak]\\!\\(\\*StyleBox[\\!\\(Join[\\(\\(\\(\\({\\(\\(\\(Join[\\(\\(\\(\\(\
+{\\(\\(\\(Join[\\(\\(\\(\\({\\(\[LeftSkeleton] 1 \[RightSkeleton]\\)}\\)\\), \
+\\(\\(Part[\\(\\(\[LeftSkeleton] 2 \[RightSkeleton]\\)\\)]\\)\\), \\(\\(Part[\
+\\(\\(\[LeftSkeleton] 2 \[RightSkeleton]\\)\\)]\\)\\)\\)\\)]\\)\\) \
+\[LeftDoubleBracket] \\(\\(\\(\\({\\(\[LeftSkeleton] 1 \
+\[RightSkeleton]\\)}\\)\\) ;; All\\)\\) \[RightDoubleBracket]\\)}\\)\\), \
+\\(\\(\\(\\(Join[\\(\\(\\(\\({\\(Part[\\(\\(\[LeftSkeleton] 2 \
+\[RightSkeleton]\\)\\)]\\)}\\)\\), \\(\\(\\(\\(Join[\\(\\(\[LeftSkeleton] 3 \
+\[RightSkeleton]\\)\\)]\\)\\) \[LeftDoubleBracket] \\(\\(Span[\\(\\(\
+\[LeftSkeleton] 2 \[RightSkeleton]\\)\\)]\\)\\) \[RightDoubleBracket]\\)\\), \
+\\(\\(\\(\\(Join[\\(\\(\[LeftSkeleton] 3 \[RightSkeleton]\\)\\)]\\)\\) \
+\[LeftDoubleBracket] \\(\\(Span[\\(\\(\[LeftSkeleton] 2 \
+\[RightSkeleton]\\)\\)]\\)\\) \[RightDoubleBracket]\\)\\)\\)\\)]\\)\\) \
+\[LeftDoubleBracket] \\(\\(1 ;; \\(\\({2}\\)\\)\\)\\) \
+\[RightDoubleBracket]\\)\\), \\(\\(\\(\\(Join[\\(\\(\\(\\({\\(Part[\\(\\(\
+\[LeftSkeleton] 2 \[RightSkeleton]\\)\\)]\\)}\\)\\), \\(\\(\\(\\(Join[\\(\\(\
+\[LeftSkeleton] 3 \[RightSkeleton]\\)\\)]\\)\\) \[LeftDoubleBracket] \
+\\(\\(Span[\\(\\(\[LeftSkeleton] 2 \[RightSkeleton]\\)\\)]\\)\\) \
+\[RightDoubleBracket]\\)\\), \\(\\(\\(\\(Join[\\(\\(\[LeftSkeleton] 3 \
+\[RightSkeleton]\\)\\)]\\)\\) \[LeftDoubleBracket] \\(\\(Span[\\(\\(\
+\[LeftSkeleton] 2 \[RightSkeleton]\\)\\)]\\)\\) \
+\[RightDoubleBracket]\\)\\)\\)\\)]\\)\\) \[LeftDoubleBracket] \\(\\(\\(\\({4}\
+\\)\\) ;; All\\)\\) \[RightDoubleBracket]\\)\\)\\)\\)]\\)\\) \
+\[LeftDoubleBracket] \\(\\({4}\\)\\) \[RightDoubleBracket]\\)}\\)\\), \
+\\(\\(\\(\\(Join[\\(\\(\\(\\({\\(\[LeftSkeleton] 1 \
+\[RightSkeleton]\\)}\\)\\), \\(\\(\\(\\(Join[\\(\\(\[LeftSkeleton] 1 \
+\[RightSkeleton]\\)\\)]\\)\\) \[LeftDoubleBracket] \\(\\(1 ;; \\(\\({2}\\)\\)\
+\\)\\) \[RightDoubleBracket]\\)\\), \\(\\(\[LeftSkeleton] 1 \
+\[RightSkeleton]\\)\\)\\)\\)]\\)\\) \[LeftDoubleBracket] \\(\\(1 ;; \\(\\({3}\
+\\)\\)\\)\\) \[RightDoubleBracket]\\)\\), \\(\\(\\(\\(Join[\\(\\(\
+\[LeftSkeleton] 1 \[RightSkeleton]\\)\\)]\\)\\) \[LeftDoubleBracket] \
+\\(\\(\\(\\({5}\\)\\) ;; All\\)\\) \[RightDoubleBracket]\\)\\)\\)\\)]\\), \
+\\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\\"\\\\\\\" does not \
+exist.\\\\\\\"\\\", \\\"MT\\\"]\\) \
+\\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
+ButtonFrame->None, ButtonData:>\\\"paclet:ref/message/General/partw\\\", \
+ButtonNote -> \\\"Part::partw\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.4755327190625*^9, 3.475532992640625*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"General", "::", "\<\"stop\"\>"}], 
+  RowBox[{
+  ":", " "}], "\<\"\\!\\(\\*StyleBox[\\\"\\\\\\\"Further output of \\\\\\\"\\\
+\", \\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\!\\(Part :: \\\"partw\\\"\\), \
+\\\"MT\\\"]\\)\[NoBreak]\\!\\(\\*StyleBox[\\\"\\\\\\\" will be suppressed \
+during this calculation.\\\\\\\"\\\", \\\"MT\\\"]\\) \\!\\(\\*ButtonBox[\\\"\
+\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/stop\\\", ButtonNote -> \
+\\\"General::stop\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.4755327190625*^9, 3.47553299265625*^9}]
+}, Open  ]]
+},
+WindowSize->{616, 644},
+WindowMargins->{{309, Automatic}, {64, Automatic}},
+FrontEndVersion->"7.0 for Microsoft Windows (32-bit) (February 18, 2009)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[545, 20, 441, 10, 31, "Input"],
+Cell[989, 32, 182, 4, 31, "Input"],
+Cell[1174, 38, 325, 8, 31, "Input"],
+Cell[1502, 48, 325, 7, 31, "Input"],
+Cell[1830, 57, 858, 21, 92, "Input"],
+Cell[2691, 80, 469, 11, 92, "Input"],
+Cell[3163, 93, 333, 8, 31, "Input"],
+Cell[CellGroupData[{
+Cell[3521, 105, 391, 10, 52, "Input"],
+Cell[3915, 117, 669, 12, 56, "Message"],
+Cell[4587, 131, 671, 12, 56, "Message"],
+Cell[5261, 145, 1002, 17, 21, "Message"],
+Cell[6266, 164, 666, 12, 56, "Message"],
+Cell[6935, 178, 646, 11, 21, "Message"],
+Cell[7584, 191, 1005, 17, 21, "Message"],
+Cell[8592, 210, 1005, 17, 21, "Message"],
+Cell[9600, 229, 647, 11, 21, "Message"],
+Cell[10250, 242, 1793, 27, 73, "Message"],
+Cell[12046, 271, 1793, 27, 73, "Message"],
+Cell[13842, 300, 2918, 44, 107, "Message"],
+Cell[16763, 346, 646, 11, 21, "Message"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

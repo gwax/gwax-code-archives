@@ -1,0 +1,42 @@
+Microsoft Visual Studio Solution File, Format Version 7.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "interact", "interact.vcproj", "{DD389B56-4260-4182-834C-1F203ED498A2}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "makeoutfile", "makeoutfile.vcproj", "{ED027E2F-86F6-4963-8973-FDC70288F4D8}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "atm2pov", "atm2pov.vcproj", "{AD7A8E05-EF5D-4EF3-B5C5-F87A440DBE26}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "atm2hr", "atm2hr.vcproj", "{432D02A0-5F35-4A0C-9257-64B697EA3BDD}"
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		ConfigName.0 = Debug
+		ConfigName.1 = Release
+	EndGlobalSection
+	GlobalSection(ProjectDependencies) = postSolution
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{DD389B56-4260-4182-834C-1F203ED498A2}.Debug.ActiveCfg = Debug|Win32
+		{DD389B56-4260-4182-834C-1F203ED498A2}.Debug.Build.0 = Debug|Win32
+		{DD389B56-4260-4182-834C-1F203ED498A2}.Release.ActiveCfg = Release|Win32
+		{DD389B56-4260-4182-834C-1F203ED498A2}.Release.Build.0 = Release|Win32
+		{ED027E2F-86F6-4963-8973-FDC70288F4D8}.Debug.ActiveCfg = Debug|Win32
+		{ED027E2F-86F6-4963-8973-FDC70288F4D8}.Debug.Build.0 = Debug|Win32
+		{ED027E2F-86F6-4963-8973-FDC70288F4D8}.Release.ActiveCfg = Release|Win32
+		{ED027E2F-86F6-4963-8973-FDC70288F4D8}.Release.Build.0 = Release|Win32
+		{AD7A8E05-EF5D-4EF3-B5C5-F87A440DBE26}.Debug.ActiveCfg = Debug|Win32
+		{AD7A8E05-EF5D-4EF3-B5C5-F87A440DBE26}.Debug.Build.0 = Debug|Win32
+		{AD7A8E05-EF5D-4EF3-B5C5-F87A440DBE26}.Release.ActiveCfg = Release|Win32
+		{AD7A8E05-EF5D-4EF3-B5C5-F87A440DBE26}.Release.Build.0 = Release|Win32
+		{432D02A0-5F35-4A0C-9257-64B697EA3BDD}.Debug.ActiveCfg = Debug|Win32
+		{432D02A0-5F35-4A0C-9257-64B697EA3BDD}.Debug.Build.0 = Debug|Win32
+		{432D02A0-5F35-4A0C-9257-64B697EA3BDD}.Release.ActiveCfg = Release|Win32
+		{432D02A0-5F35-4A0C-9257-64B697EA3BDD}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionItems) = postSolution
+		Item:1 = todo.txt
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

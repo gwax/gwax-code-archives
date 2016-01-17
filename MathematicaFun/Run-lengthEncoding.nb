@@ -1,0 +1,213 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 7.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[      7979,        204]
+NotebookOptionsPosition[      7610,        187]
+NotebookOutlinePosition[      7955,        202]
+CellTagsIndexPosition[      7912,        199]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"RunLengthEncoding", "[", 
+    RowBox[{"aList_", ",", "aCount_", ",", "aEscChar_"}], "]"}], ":=", 
+   "\[IndentingNewLine]", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"lastChar", "=", 
+        RowBox[{"ToString", "[", "aEscChar", "]"}]}], ",", "nextChar", ",", 
+       RowBox[{"charCount", "=", "0"}], ",", 
+       RowBox[{"outList", "=", 
+        RowBox[{"{", "}"}]}], ",", 
+       RowBox[{"myList", "=", "aList"}]}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"While", "[", 
+       RowBox[{
+        RowBox[{"myList", "\[NotEqual]", 
+         RowBox[{"{", "}"}]}], ",", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"nextChar", "=", 
+          RowBox[{"First", "[", "myList", "]"}]}], ";", "\[IndentingNewLine]", 
+         RowBox[{"myList", "=", 
+          RowBox[{"Rest", "[", "myList", "]"}]}], ";", "\[IndentingNewLine]", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{"nextChar", "\[Equal]", "lastChar"}], ",", 
+           "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{"charCount", "<", "aCount"}], ",", 
+              RowBox[{"outList", "=", 
+               RowBox[{"Join", "[", 
+                RowBox[{"outList", ",", 
+                 RowBox[{"{", "nextChar", "}"}]}], "]"}]}]}], "]"}], ";", 
+            RowBox[{"charCount", "++"}]}], ",", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{"charCount", "\[GreaterEqual]", "aCount"}], ",", 
+              RowBox[{"outList", "=", 
+               RowBox[{"Join", "[", 
+                RowBox[{"outList", ",", 
+                 RowBox[{"{", "aEscChar", "}"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"charCount", "-", "aCount"}], "}"}], ",", 
+                 RowBox[{"{", "aEscChar", "}"}]}], "]"}]}]}], "]"}], ";", 
+            RowBox[{"charCount", "=", "1"}], ";", 
+            RowBox[{"outList", "=", 
+             RowBox[{"Join", "[", 
+              RowBox[{"outList", ",", 
+               RowBox[{"{", "nextChar", "}"}]}], "]"}]}], ";", 
+            RowBox[{"lastChar", "=", "nextChar"}]}]}], "]"}]}]}], "]"}], ";", 
+      "\[IndentingNewLine]", "outList"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"InverseRunLengthEncoding", "[", 
+    RowBox[{"aList_", ",", "aEscChar_"}], "]"}], ":=", "\[IndentingNewLine]", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"myList", "=", "aList"}], ",", 
+       RowBox[{"myNumber", "=", "0"}], ",", 
+       RowBox[{"lastChar", "=", 
+        RowBox[{"ToString", "[", "aEscChar", "]"}]}], ",", 
+       RowBox[{"outList", "=", 
+        RowBox[{"{", "}"}]}], ",", "nextChar"}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"While", "[", 
+       RowBox[{
+        RowBox[{"myList", "\[NotEqual]", 
+         RowBox[{"{", "}"}]}], ",", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"nextChar", "=", 
+          RowBox[{"First", "[", "myList", "]"}]}], ";", "\[IndentingNewLine]", 
+         RowBox[{"myList", "=", 
+          RowBox[{"Rest", "[", "myList", "]"}]}], ";", "\[IndentingNewLine]", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{"nextChar", "\[NotEqual]", "aEscChar"}], ",", 
+           "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"outList", "=", 
+             RowBox[{"Join", "[", 
+              RowBox[{"outList", ",", 
+               RowBox[{"{", "nextChar", "}"}]}], "]"}]}], ";", 
+            RowBox[{"lastChar", "=", "nextChar"}]}], ",", 
+           "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"nextChar", "=", 
+             RowBox[{"First", "[", "myList", "]"}]}], ";", 
+            RowBox[{"myList", "=", 
+             RowBox[{"Rest", "[", "myList", "]"}]}], ";", 
+            "\[IndentingNewLine]", 
+            RowBox[{"While", "[", 
+             RowBox[{
+              RowBox[{"nextChar", "\[NotEqual]", "aEscChar"}], ",", 
+              RowBox[{
+               RowBox[{"myNumber", "=", 
+                RowBox[{
+                 RowBox[{"myNumber", "*", "10"}], "+", 
+                 RowBox[{"ToExpression", "[", "nextChar", "]"}]}]}], ";", 
+               RowBox[{"nextChar", "=", 
+                RowBox[{"First", "[", "myList", "]"}]}], ";", 
+               RowBox[{"myList", "=", 
+                RowBox[{"Rest", "[", "myList", "]"}]}], ";"}]}], "]"}], ";", 
+            "\[IndentingNewLine]", 
+            RowBox[{"For", "[", 
+             RowBox[{"myNumber", ",", 
+              RowBox[{"myNumber", ">", "0"}], ",", 
+              RowBox[{"myNumber", "--"}], ",", 
+              RowBox[{"outList", "=", 
+               RowBox[{"Join", "[", 
+                RowBox[{"outList", ",", 
+                 RowBox[{"{", "lastChar", "}"}]}], "]"}]}]}], "]"}], ";", 
+            RowBox[{"lastChar", "=", "nextChar"}]}]}], "]"}]}]}], "]"}], ";", 
+      "\[IndentingNewLine]", "outList"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"RunLengthEncoding", "[", 
+  RowBox[{
+   RowBox[{"Characters", "[", "\"\<AAAAAAABBBBCCCD\>\"", "]"}], ",", "1", 
+   ",", "\"\<\\\\\>\""}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"StringJoin", "[", 
+  RowBox[{"InverseRunLengthEncoding", "[", 
+   RowBox[{"%", ",", "\"\<\\\\\>\""}], "]"}], "]"}]}], "Input",
+ CellChangeTimes->CompressedData["
+1:eJxTTMoPSmViYGAQAWIQzdBQE8n99KUjA8OyPDDdkF0M4SctgdA7V0Lo7Wsh
+9ISNEPrDXoj6jYcg/O4TEL7EFQitdA1Cz70FoY1vQ2ih5xD1V6G0zRsIfe09
+hN7yBaLu/28IfYSLB0xHGoBphuumEDrQHCKeZAuhUxwg4qEuEPqdB0T8tA+E
+vzsSQtcnQOjlUFovFUL7FkLo1+UQurIaQsc3Q8wpaYXQxTMgtP5iEA0A9bSJ
+xw==
+  "]],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"A\"\>", ",", "\<\"\\\\\"\>", ",", "6", ",", "\<\"\\\\\"\>", 
+   ",", "\<\"B\"\>", ",", "\<\"\\\\\"\>", ",", "3", ",", "\<\"\\\\\"\>", 
+   ",", "\<\"C\"\>", ",", "\<\"\\\\\"\>", ",", "2", ",", "\<\"\\\\\"\>", 
+   ",", "\<\"D\"\>"}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.475528997921875*^9, {3.4755290456875*^9, 3.4755290706875*^9}, {
+   3.47552910403125*^9, 3.475529200015625*^9}, {3.475529252234375*^9, 
+   3.475529284921875*^9}, {3.475529380515625*^9, 3.475529394140625*^9}, 
+   3.475529434421875*^9, 3.47552953603125*^9, {3.475530614109375*^9, 
+   3.475530635078125*^9}, {3.4755307800625*^9, 3.475530796359375*^9}, {
+   3.47553099371875*^9, 3.475531033875*^9}, {3.475532794609375*^9, 
+   3.47553280984375*^9}}],
+
+Cell[BoxData["\<\"AAAAAAABBBBCCCD\"\>"], "Output",
+ CellChangeTimes->{
+  3.475528997921875*^9, {3.4755290456875*^9, 3.4755290706875*^9}, {
+   3.47552910403125*^9, 3.475529200015625*^9}, {3.475529252234375*^9, 
+   3.475529284921875*^9}, {3.475529380515625*^9, 3.475529394140625*^9}, 
+   3.475529434421875*^9, 3.47552953603125*^9, {3.475530614109375*^9, 
+   3.475530635078125*^9}, {3.4755307800625*^9, 3.475530796359375*^9}, {
+   3.47553099371875*^9, 3.475531033875*^9}, {3.475532794609375*^9, 
+   3.475532809859375*^9}}]
+}, Open  ]]
+},
+WindowSize->{616, 644},
+WindowMargins->{{55, Automatic}, {36, Automatic}},
+FrontEndVersion->"7.0 for Microsoft Windows (32-bit) (February 18, 2009)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[567, 22, 5741, 137, 632, "Input"],
+Cell[6311, 161, 761, 13, 30, "Output"],
+Cell[7075, 176, 519, 8, 30, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

@@ -1,0 +1,488 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 7.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[     19102,        479]
+NotebookOptionsPosition[     18482,        457]
+NotebookOutlinePosition[     18827,        472]
+CellTagsIndexPosition[     18784,        469]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"CreateNode", "[", "maxDepth_", "]"}], ":=", "\[IndentingNewLine]", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"possibleNodes", ",", "choiceNode"}], "}"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"maxDepth", ">", "1"}], ",", "\[IndentingNewLine]", 
+       RowBox[{"possibleNodes", "=", 
+        RowBox[{"Join", "[", 
+         RowBox[{"Functions", ",", "Terminals"}], "]"}]}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"possibleNodes", "=", "Terminals"}]}], "]"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"choiceNode", "=", 
+      RowBox[{"RandomChoice", "[", "possibleNodes", "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"choiceNode", "[", 
+         RowBox[{"[", "2", "]"}], "]"}], ">", "0"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"Apply", "[", 
+        RowBox[{
+         RowBox[{"choiceNode", "[", 
+          RowBox[{"[", "1", "]"}], "]"}], ",", 
+         RowBox[{"Table", "[", 
+          RowBox[{
+           RowBox[{"CreateNode", "[", 
+            RowBox[{"maxDepth", "-", "1"}], "]"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"choiceNode", "[", 
+             RowBox[{"[", "2", "]"}], "]"}], "}"}]}], "]"}]}], "]"}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{"choiceNode", "[", 
+        RowBox[{"[", "1", "]"}], "]"}]}], "]"}]}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.46410027245448*^9, 3.46410034312726*^9}, {
+  3.464100612534407*^9, 3.46410074487731*^9}, {3.4641008009704285`*^9, 
+  3.4641008112671056`*^9}, {3.4641010808869286`*^9, 3.464101112636319*^9}, {
+  3.4641011488075*^9, 3.4641011922915025`*^9}, {3.4641012390772433`*^9, 
+  3.4641013383367715`*^9}, {3.464101370058566*^9, 3.46410137223065*^9}, {
+  3.464105265132146*^9, 3.464105275038332*^9}, {3.464313176618898*^9, 
+  3.4643131844893084`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"CreateTree", "[", 
+   RowBox[{"maxComplexity_", ",", "maxDepth_"}], "]"}], ":=", 
+  "\[IndentingNewLine]", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", "aTree", "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"Catch", "[", 
+     RowBox[{"While", "[", 
+      RowBox[{"True", ",", 
+       RowBox[{
+        RowBox[{"aTree", "=", 
+         RowBox[{"CreateNode", "[", "maxDepth", "]"}]}], ";", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"LeafCount", "[", "aTree", "]"}], "\[LessEqual]", 
+           "maxComplexity"}], ",", 
+          RowBox[{"Throw", "[", "aTree", "]"}]}], "]"}]}]}], "]"}], "]"}]}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.464105226460518*^9, 3.464105436172979*^9}, {
+  3.464314108394704*^9, 3.464314150485194*^9}, {3.464617615505743*^9, 
+  3.464617709565835*^9}, {3.464617753033472*^9, 3.4646177547053046`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"NodeToList", "[", "node_", "]"}], ":=", "\[IndentingNewLine]", 
+  RowBox[{"If", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Length", "[", "node", "]"}], "\[Equal]", "0"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"{", "node", "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"Join", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"node", "[", 
+        RowBox[{"[", "0", "]"}], "]"}], "}"}], ",", 
+      RowBox[{"Table", "[", 
+       RowBox[{
+        RowBox[{"NodeToList", "[", 
+         RowBox[{"node", "[", 
+          RowBox[{"[", "i", "]"}], "]"}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"i", ",", "1", ",", 
+          RowBox[{"Length", "[", "node", "]"}]}], "}"}]}], "]"}]}], "]"}]}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.464630638825848*^9, 3.4646306666694193`*^9}, {
+  3.4646307185440874`*^9, 3.464630810402875*^9}, {3.464630851152614*^9, 
+  3.464630860824427*^9}, {3.4646309152928286`*^9, 3.4646309673393707`*^9}, {
+  3.4646310041985097`*^9, 3.464631086791731*^9}, {3.4646311181040306`*^9, 
+  3.4646311374632816`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ListToNode", "[", "list_", "]"}], ":=", "\[IndentingNewLine]", 
+  RowBox[{"Switch", "[", 
+   RowBox[{
+    RowBox[{"Length", "[", "list", "]"}], ",", "\[IndentingNewLine]", "0", 
+    ",", "list", ",", "\[IndentingNewLine]", "1", ",", 
+    RowBox[{"list", "[", 
+     RowBox[{"[", "1", "]"}], "]"}], ",", "\[IndentingNewLine]", "_", ",", 
+    RowBox[{"Apply", "[", 
+     RowBox[{
+      RowBox[{"First", "[", "list", "]"}], ",", 
+      RowBox[{"Map", "[", 
+       RowBox[{"ListToNode", ",", 
+        RowBox[{"Rest", "[", "list", "]"}]}], "]"}]}], "]"}]}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.4641073017475176`*^9, 3.464107441782961*^9}, {
+  3.4641076388528676`*^9, 3.4641076426966667`*^9}, {3.464107754260595*^9, 
+  3.4641077861985035`*^9}, {3.464631215556532*^9, 3.464631234775159*^9}, {
+  3.4646316654911523`*^9, 3.4646316978034453`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"FindPart", "[", "nodelist_", "]"}], ":=", "\[IndentingNewLine]", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", "aPart", "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"aPart", "=", 
+      RowBox[{"RandomChoice", "[", 
+       RowBox[{
+        RowBox[{"Map", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"LeafCount", "[", 
+            RowBox[{"ListToNode", "[", "#", "]"}], "]"}], "&"}], ",", 
+          "nodelist"}], "]"}], "\[Rule]", 
+        RowBox[{"Table", "[", 
+         RowBox[{"i", ",", 
+          RowBox[{"{", 
+           RowBox[{"i", ",", 
+            RowBox[{"Length", "[", "nodelist", "]"}]}], "}"}]}], "]"}]}], 
+       "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"aPart", "\[Equal]", "1"}], ",", "\[IndentingNewLine]", 
+       RowBox[{"{", "aPart", "}"}], ",", "\[IndentingNewLine]", 
+       RowBox[{"Join", "[", 
+        RowBox[{
+         RowBox[{"{", "aPart", "}"}], ",", 
+         RowBox[{"FindPart", "[", 
+          RowBox[{"nodelist", "[", 
+           RowBox[{"[", "aPart", "]"}], "]"}], "]"}]}], "]"}]}], "]"}]}]}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.464314164331892*^9, 3.464314196209038*^9}, {
+  3.4643733146877832`*^9, 3.4643734210142956`*^9}, {3.4643734885290565`*^9, 
+  3.464373492325883*^9}, {3.4645396582218866`*^9, 3.4645396639096413`*^9}, {
+  3.464616007214145*^9, 3.4646160320743155`*^9}, {3.4646165628291917`*^9, 
+  3.4646165936412835`*^9}, {3.4646168421192975`*^9, 3.464616895289776*^9}, {
+  3.464631382633588*^9, 3.4646313971647444`*^9}, {3.46463191267707*^9, 
+  3.464631914036436*^9}, {3.4646319563799157`*^9, 3.464631961520508*^9}, {
+  3.4646320141607957`*^9, 3.4646320826291075`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"PointMutate", "[", "nodelist_", "]"}], ":=", "\[IndentingNewLine]", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"aPart", ",", "aRep"}], "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"aPart", "=", 
+      RowBox[{"FindPart", "[", "nodelist", "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"aRep", "=", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"RandomChoice", "[", "\[IndentingNewLine]", 
+        RowBox[{"Select", "[", 
+         RowBox[{
+          RowBox[{"Join", "[", 
+           RowBox[{"Terminals", ",", "Functions"}], "]"}], ",", 
+          "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"#", "[", 
+             RowBox[{"[", "2", "]"}], "]"}], "\[Equal]", 
+            "\[IndentingNewLine]", 
+            RowBox[{
+             RowBox[{"Length", "[", "\[IndentingNewLine]", 
+              RowBox[{"Apply", "[", 
+               RowBox[{"Part", ",", 
+                RowBox[{"Join", "[", 
+                 RowBox[{
+                  RowBox[{"{", "nodelist", "}"}], ",", 
+                  RowBox[{"Most", "[", "aPart", "]"}]}], "]"}]}], "]"}], 
+              "]"}], "\[IndentingNewLine]", "-", "1"}]}], "&"}]}], "]"}], 
+        "]"}], "\[IndentingNewLine]", "[", 
+       RowBox[{"[", "1", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"ReplacePart", "[", 
+      RowBox[{"nodelist", ",", 
+       RowBox[{"aPart", "\[Rule]", "aRep"}]}], "]"}]}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.4646322328937707`*^9, 3.4646324856931677`*^9}, {
+   3.464632528918556*^9, 3.464632534888223*^9}, 3.4646325990855827`*^9, {
+   3.464632643014204*^9, 3.46463268311197*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"RegrowMutate", "[", 
+   RowBox[{"nodelist_", ",", "maxComplexity_", ",", "maxDepth_"}], "]"}], ":=",
+   "\[IndentingNewLine]", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", "newnodelist", "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"Catch", "[", "\[IndentingNewLine]", 
+     RowBox[{"While", "[", 
+      RowBox[{"True", ",", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"newnodelist", "=", "\[IndentingNewLine]", 
+         RowBox[{"ReplacePart", "[", 
+          RowBox[{"nodelist", ",", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"Most", "[", 
+             RowBox[{"FindPart", "[", "nodelist", "]"}], "]"}], "\[Rule]", 
+            RowBox[{"NodeToList", "[", 
+             RowBox[{"CreateNode", "[", "maxDepth", "]"}], "]"}]}]}], "]"}]}],
+         ";", "\[IndentingNewLine]", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"LeafCount", "[", 
+            RowBox[{"ListToNode", "[", "newnodelist", "]"}], "]"}], 
+           "\[LessEqual]", "maxComplexity"}], ",", 
+          RowBox[{"Throw", "[", "newnodelist", "]"}]}], "]"}]}]}], "]"}], 
+     "]"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.4645389409603853`*^9, 3.464538960007296*^9}, {
+  3.4646169413192587`*^9, 3.4646169735055227`*^9}, {3.464632749271607*^9, 
+  3.4646327694601407`*^9}, {3.4646328440733356`*^9, 3.464632981204627*^9}, {
+  3.4646330346740613`*^9, 3.46463303692409*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"CrossMutate", "[", 
+   RowBox[{"nodelist1_", ",", "nodelist2_", ",", "maxComplexity_"}], "]"}], ":=",
+   "\[IndentingNewLine]", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+     "aPart1", ",", "aPart2", ",", "aSpot1", ",", "aSpot2", ",", 
+      "newnodelist1", ",", "newnodelist2"}], "}"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"Catch", "[", "\[IndentingNewLine]", 
+     RowBox[{"While", "[", 
+      RowBox[{"True", ",", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"aSpot1", "=", 
+         RowBox[{"Most", "[", 
+          RowBox[{"FindPart", "[", "nodelist1", "]"}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"aSpot2", "=", 
+         RowBox[{"Most", "[", 
+          RowBox[{"FindPart", "[", "nodelist2", "]"}], "]"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"aPart1", "=", 
+         RowBox[{"Apply", "[", 
+          RowBox[{"Part", ",", 
+           RowBox[{"Join", "[", 
+            RowBox[{
+             RowBox[{"{", "nodelist1", "}"}], ",", "aSpot1"}], "]"}]}], 
+          "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"aPart2", "=", 
+         RowBox[{"Apply", "[", 
+          RowBox[{"Part", ",", 
+           RowBox[{"Join", "[", 
+            RowBox[{
+             RowBox[{"{", "nodelist2", "}"}], ",", "aSpot2"}], "]"}]}], 
+          "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{"aSpot1", "==", 
+           RowBox[{"{", "}"}]}], ",", "\[IndentingNewLine]", 
+          RowBox[{"newnodelist1", "=", "aPart2"}], ",", "\[IndentingNewLine]", 
+          RowBox[{"newnodelist1", "=", 
+           RowBox[{"ReplacePart", "[", 
+            RowBox[{"nodelist1", ",", 
+             RowBox[{"aSpot1", "\[Rule]", "aPart2"}]}], "]"}]}]}], "]"}], ";",
+         "\[IndentingNewLine]", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{"aSpot2", "==", 
+           RowBox[{"{", "}"}]}], ",", "\[IndentingNewLine]", 
+          RowBox[{"newnodelist2", "=", "aPart1"}], ",", "\[IndentingNewLine]", 
+          RowBox[{"newnodelist2", "=", 
+           RowBox[{"ReplacePart", "[", 
+            RowBox[{"nodelist2", ",", 
+             RowBox[{"aSpot2", "\[Rule]", "aPart1"}]}], "]"}]}]}], "]"}], ";",
+         "\[IndentingNewLine]", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{"LeafCount", "[", 
+             RowBox[{"ListToNode", "[", "newnodelist1", "]"}], "]"}], 
+            "\[LessEqual]", "maxComplexity"}], "&&", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"LeafCount", "[", 
+             RowBox[{"ListToNode", "[", "newnodelist2", "]"}], "]"}], 
+            "\[LessEqual]", "maxComplexity"}]}], ",", "\[IndentingNewLine]", 
+          RowBox[{"Throw", "[", 
+           RowBox[{"{", 
+            RowBox[{"newnodelist1", ",", "newnodelist2"}], "}"}], "]"}]}], 
+         "]"}]}]}], "]"}], "]"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.46463313070654*^9, 3.4646335375988483`*^9}, {
+   3.464634140079525*^9, 3.4646341833292484`*^9}, {3.464634218532148*^9, 
+   3.4646343244064703`*^9}, {3.4646345888891525`*^9, 3.464634781528545*^9}, {
+   3.4646349337775707`*^9, 3.4646349564805503`*^9}, {3.4646350027771287`*^9, 
+   3.464635021761382*^9}, {3.464635349759283*^9, 3.4646353506967773`*^9}, 
+   3.464635455133609*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"BreedNodeList", "[", 
+   RowBox[{
+   "nodelist_", ",", "crossProbability_", ",", "regrowProbability_", ",", 
+    "pointProbability_", ",", "maxComplexity_", ",", "maxDepth_"}], "]"}], ":=",
+   "\[IndentingNewLine]", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+     "newnodelist", ",", "lenO2", ",", "nodepairlist", ",", "nodepairlistT"}],
+      "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"lenO2", "=", 
+      RowBox[{"Floor", "[", 
+       RowBox[{
+        RowBox[{"Length", "[", "nodelist", "]"}], "/", "2"}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"nodepairlist", "=", "\[IndentingNewLine]", 
+      RowBox[{"Transpose", "[", "\[IndentingNewLine]", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"nodelist", "[", 
+          RowBox[{"[", 
+           RowBox[{"1", ";;", "lenO2"}], "]"}], "]"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"nodelist", "[", 
+          RowBox[{"[", 
+           RowBox[{
+            RowBox[{"lenO2", "+", "1"}], ";;", 
+            RowBox[{"2", "*", "lenO2"}]}], "]"}], "]"}]}], "}"}], "]"}]}], 
+     ";", "\[IndentingNewLine]", 
+     RowBox[{"nodepairlist", "=", "\[IndentingNewLine]", 
+      RowBox[{"ParallelMap", "[", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"Function", "[", 
+         RowBox[{"nodepair", ",", "\[IndentingNewLine]", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"RandomReal", "[", "]"}], "\[LessEqual]", 
+             "crossProbability"}], ",", "\[IndentingNewLine]", 
+            RowBox[{"CrossMutate", "[", 
+             RowBox[{
+              RowBox[{"nodepair", "[", 
+               RowBox[{"[", "1", "]"}], "]"}], ",", 
+              RowBox[{"nodepair", "[", 
+               RowBox[{"[", "2", "]"}], "]"}], ",", "maxComplexity"}], "]"}], 
+            ",", "nodepair"}], "]"}]}], "]"}], ",", "\[IndentingNewLine]", 
+        "nodepairlist"}], "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"nodepairlistT", "=", 
+      RowBox[{"Transpose", "[", "nodepairlist", "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"newnodelist", "=", "\[IndentingNewLine]", 
+      RowBox[{"Join", "[", 
+       RowBox[{
+        RowBox[{"nodepairlistT", "[", 
+         RowBox[{"[", "1", "]"}], "]"}], ",", 
+        RowBox[{"nodepairlistT", "[", 
+         RowBox[{"[", "2", "]"}], "]"}], ",", 
+        RowBox[{"Take", "[", 
+         RowBox[{"nodelist", ",", 
+          RowBox[{
+           RowBox[{"2", "*", "lenO2"}], "-", 
+           RowBox[{"Length", "[", "nodelist", "]"}]}]}], "]"}]}], "]"}]}], 
+     ";", "\[IndentingNewLine]", 
+     RowBox[{"newnodelist", "=", "\[IndentingNewLine]", 
+      RowBox[{"ParallelMap", "[", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"Function", "[", 
+         RowBox[{"node", ",", "\[IndentingNewLine]", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"RandomReal", "[", "]"}], "\[LessEqual]", 
+             "regrowProbability"}], ",", 
+            RowBox[{"RegrowMutate", "[", 
+             RowBox[{"node", ",", "maxComplexity", ",", "maxDepth"}], "]"}], 
+            ",", "node"}], "]"}]}], "]"}], ",", "\[IndentingNewLine]", 
+        "newnodelist"}], "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"newnodelist", "=", "\[IndentingNewLine]", 
+      RowBox[{"ParallelMap", "[", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"Function", "[", 
+         RowBox[{"node", ",", "\[IndentingNewLine]", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"RandomReal", "[", "]"}], "\[LessEqual]", 
+             "pointProbability"}], ",", "\[IndentingNewLine]", 
+            RowBox[{"PointMutate", "[", "node", "]"}], ",", "node"}], "]"}]}],
+          "]"}], ",", "\[IndentingNewLine]", "newnodelist"}], "]"}]}], ";", 
+     "\[IndentingNewLine]", "newnodelist"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.464450450544586*^9, 3.4644504760600147`*^9}, {
+  3.4644505834336405`*^9, 3.464450590449176*^9}, {3.4644510754726763`*^9, 
+  3.4644511637913933`*^9}, {3.464539000538546*^9, 3.464539001507296*^9}, {
+  3.4645393575690618`*^9, 3.464539447634328*^9}, {3.464721195032056*^9, 
+  3.4647211964454403`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"CalculateFitness", "[", 
+   RowBox[{"testfunction_", ",", "generation_"}], "]"}], ":=", 
+  RowBox[{"ParallelMap", "[", 
+   RowBox[{
+    RowBox[{"Function", "[", 
+     RowBox[{"node", ",", 
+      FractionBox["1", 
+       RowBox[{"1", "+", 
+        RowBox[{"testfunction", "[", "node", "]"}]}]]}], "]"}], ",", 
+    "generation"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.464721421369913*^9, 3.46472149197127*^9}, {
+  3.46472174620735*^9, 3.464721758464629*^9}}]
+},
+WindowSize->{672, 712},
+WindowMargins->{{18, Automatic}, {Automatic, 31}},
+FrontEndVersion->"7.0 for Microsoft Windows (32-bit) (February 18, 2009)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[545, 20, 1960, 47, 192, "Input"],
+Cell[2508, 69, 918, 23, 92, "Input"],
+Cell[3429, 94, 1093, 27, 92, "Input"],
+Cell[4525, 123, 880, 19, 112, "Input"],
+Cell[5408, 144, 1753, 40, 152, "Input"],
+Cell[7164, 186, 1704, 40, 252, "Input"],
+Cell[8871, 228, 1459, 32, 172, "Input"],
+Cell[10333, 262, 3378, 78, 352, "Input"],
+Cell[13714, 342, 4266, 98, 632, "Input"],
+Cell[17983, 442, 495, 13, 69, "Input"]
+}
+]
+*)
+
+(* End of internal cache information *)
